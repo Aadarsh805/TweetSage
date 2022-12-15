@@ -22,6 +22,8 @@ const HomePage = () => {
   const [noQuestionError, setNoQuestionError] = useState(false);
   const [showTweets, setShowTweets] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
     setUser("");
@@ -97,6 +99,25 @@ const HomePage = () => {
   let noTweets = tweets?.length < 1;
   if (tweets === undefined) noTweets = true;
 
+  // typing effect
+
+  useEffect(() => {
+    let index = 0;
+
+    const typing = setInterval(() => {
+      setDisplayedText(`${answer.substring(0, index)}`);
+      index++;
+
+      if (index > answer.length) {
+        clearInterval(typing);
+      }
+    }, 10);
+
+    return () => {
+      clearInterval(typing);
+    };
+  }, [answer]);
+
   return (
     <>
       <div className="flex items-center gap-5">
@@ -122,7 +143,7 @@ const HomePage = () => {
         </div>
         <LoadingButton
           onClick={handleClick}
-          className="p-2 border-white border px-4 bg-white text-black"
+          className="hover:bg-gray-500 p-2 border-white border px-4 bg-white text-black"
           loading={loadingTweets}
           variant="contained"
         >
@@ -151,7 +172,7 @@ const HomePage = () => {
           </span>
           <LoadingButton
             onClick={handleSecondClick}
-            className={`p-2 border-white border px-4 bg-white text-black mui-disabled:bg-red`}
+            className={`hover:bg-gray-500 p-2 border-white border px-4 bg-white text-black mui-disabled:bg-red`}
             loading={loadingData}
             variant="contained"
             disabled={noTweets || !question}
@@ -186,20 +207,27 @@ const HomePage = () => {
       </Link>
 
       {answer && (
-        <p
-          className={`text-yellow-500 mt-2 font-bold text-2xl p-2 bg-gray-100 ${
+        <div
+          className={`mt-2 font-bold text-2xl p-2 bg-yellow-100 typing-effect ${
             !showAnswer && "hidden"
           }`}
         >
-          {answer?.split(/\d+\./).map((string, i) => (
-            <li className="flex" key={i}>
-              {i + 1 + ")"} {string}
-            </li>
-          ))}
-        </p>
+          <>{displayedText}</>
+        </div>
       )}
     </>
   );
 };
 
 export default HomePage;
+
+{
+  /* <p className="text-white font-bold text-3xl">{text}</p>
+{isTyping && <span>|</span>} */
+}
+
+// {answer?.split(/\d+\./).map((string, i) => (
+//   <li className="flex" key={i}>
+//     {i + 1 + ")"} {string}
+//   </li>
+// ))}
