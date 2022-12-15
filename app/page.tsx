@@ -4,10 +4,7 @@ import Link from "next/link";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import Image from "next/image";
-import loadingGif from "../public/loading.gif";
-import loadedGif from "../public/loaded.gif";
-import loadedPng from "../public/loadedPng.png";
+import { LoadingButton } from "@mui/lab";
 
 type TweetData = {
   text: string | null | undefined;
@@ -18,7 +15,8 @@ const HomePage = () => {
   const [question, setQuestion] = useState<string>("");
   const [tweets, setTweets] = useState<TweetData[]>([]);
   const [loadingTweets, setLoadingTweets] = useState(false);
-  const [clickedTweets, setClickedTweets] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
+  const [loadedTweets, setLoadedTweets] = useState(false);
   const [answer, setAnswer] = useState<string>("");
   const [noUserError, setNoUserError] = useState(false);
   const [noQuestionError, setNoQuestionError] = useState(false);
@@ -44,7 +42,6 @@ const HomePage = () => {
       setNoUserError(false);
     }
     setLoadingTweets(true);
-    setClickedTweets(true);
 
     const results = await fetch("/api/user/tweets", {
       method: "POST",
@@ -58,6 +55,7 @@ const HomePage = () => {
 
     setTweets(results.data.data);
     setLoadingTweets(false);
+    setLoadedTweets(true);
   };
 
   const handleSecondClick = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -72,6 +70,7 @@ const HomePage = () => {
     } else {
       setNoQuestionError(false);
     }
+    setLoadingData(true);
 
     const prompt = `you are given some tweets below, read these tweets : \n
     ${tweets.map((tweet) => tweet.text + "\n")}
@@ -90,6 +89,7 @@ const HomePage = () => {
     }).then((res) => res.json());
 
     setAnswer(results.result.choices[0].text);
+    setLoadingData(false);
   };
 
   let noTweets = tweets?.length < 1;
@@ -103,7 +103,6 @@ const HomePage = () => {
             value={user}
             onChange={(e) => {
               setUser(e.target.value);
-              setClickedTweets(false);
               setAnswer("");
               setTweets([]);
             }}
@@ -113,21 +112,18 @@ const HomePage = () => {
           {noUserError && (
             <p className="text-red-600 text-md">Username can't be empty bro!</p>
           )}
-        </div>
-        <button
-          className="text-white p-2 border-white border px-4 h-fit"
-          onClick={handleClick}
-        >
-          {clickedTweets ? (
-            loadingTweets ? (
-              <Image src={loadingGif} alt="loading" className="w-12" />
-            ) : (
-              <Image src={loadedPng} alt="loaded" className="w-12" />
-            )
-          ) : (
-            <span>get tweets</span>
+          {loadedTweets && !tweets && (
+            <p className="text-red-600 text-md">username wrong</p>
           )}
-        </button>
+        </div>
+        <LoadingButton
+          onClick={handleClick}
+          className="p-2 border-white border px-4 bg-white text-black"
+          loading={loadingTweets}
+          variant="contained"
+        >
+          Submit
+        </LoadingButton>
         <div className="flex flex-col gap-2">
           <input
             type="text"
@@ -149,15 +145,15 @@ const HomePage = () => {
           >
             Get tweets first bro!
           </span>
-          <button
-            className={`text-white p-2  border-white border px-4 h-fit ${
-              noTweets && "bg-red-500 text-black cursor-not-allowed"
-            }`}
+          <LoadingButton
             onClick={handleSecondClick}
-            disabled={noTweets}
+            className={`p-2 border-white border px-4 bg-white text-black
+            ${noTweets && "bg-red-500 text-black cursor-not-allowed"}`}
+            loading={loadingData}
+            variant="contained"
           >
             give data
-          </button>
+          </LoadingButton>
         </div>
       </div>
 
