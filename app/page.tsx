@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
-import tweets from "../pages/api/user/tweets";
-import { z } from "zod";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 type TweetData = {
   text: string | null | undefined;
@@ -85,7 +84,7 @@ const HomePage = () => {
     setAnswer(results.result.choices[0].text);
   };
 
-  console.log("answer baby", answer);
+  let noTweets = tweets?.length < 1;
 
   return (
     <>
@@ -99,7 +98,7 @@ const HomePage = () => {
             placeholder="username"
           />
           {noUserError && (
-            <p className="text-red-600 text-xl">Username can't be empty bro!</p>
+            <p className="text-red-600 text-md">Username can't be empty bro!</p>
           )}
         </div>
         <div className="flex flex-col gap-2">
@@ -111,7 +110,7 @@ const HomePage = () => {
             placeholder="question"
           />
           {noQuestionError && (
-            <p className="text-red-600 text-xl">Username can't be empty bro!</p>
+            <p className="text-red-600 text-md">Question can't be empty bro!</p>
           )}
         </div>
         <button
@@ -121,28 +120,24 @@ const HomePage = () => {
           get tweets
         </button>
 
-        <button
-          className={`text-white p-2 border-white border px-4 h-fit ${
-            tweets.length < 1 && "bg-red-500 text-black"
-          }`}
-          onClick={handleSecondClick}
-          disabled={!tweets}
-        >
-          give data
-        </button>
-        <Link
-          href="/api/user/tweets"
-          className="text-black bg-white p-2 border-white border px-4 h-fit"
-        >
-          go to tweets
-        </Link>
-
-        <Link
-          href="/api/user/ai"
-          className="text-black bg-white p-2 border-white border px-4 h-fit"
-        >
-          go to data
-        </Link>
+        <div className="relative group">
+          <span
+            className={`absolute bg-white text-yellow text-xs p-1 -bottom-[4rem] hidden ${
+              noTweets && "group-hover:block"
+            }`}
+          >
+            Get tweets first bro!
+          </span>
+          <button
+            className={`text-white p-2  border-white border px-4 h-fit ${
+              noTweets && "bg-red-500 text-black cursor-not-allowed"
+            }`}
+            onClick={handleSecondClick}
+            disabled={noTweets}
+          >
+            give data
+          </button>
+        </div>
       </div>
 
       {tweets &&
@@ -156,6 +151,13 @@ const HomePage = () => {
             {tweet.text}
           </p>
         ))}
+
+      <Link href="https://github.com/Aadarsh805/metaTweet.ai">
+        <div className="gap-2 inline-flex items-center justify-center h-10 px-3 text-xs bg-transparent text-white border border-gray-5 hover:bg-gray-4 hover:border-gray-4">
+          <GitHubIcon fontSize="small" />
+          <span className="text-[.9rem]">Star us on github</span>
+        </div>
+      </Link>
 
       {answer && (
         <p
