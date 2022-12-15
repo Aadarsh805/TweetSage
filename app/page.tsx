@@ -4,6 +4,10 @@ import Link from "next/link";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import Image from "next/image";
+import loadingGif from "../public/loading.gif";
+import loadedGif from "../public/loaded.gif";
+import loadedPng from "../public/loadedPng.png";
 
 type TweetData = {
   text: string | null | undefined;
@@ -13,10 +17,11 @@ const HomePage = () => {
   const [user, setUser] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
   const [tweets, setTweets] = useState<TweetData[]>([]);
+  const [loadingTweets, setLoadingTweets] = useState(false);
+  const [clickedTweets, setClickedTweets] = useState(false);
   const [answer, setAnswer] = useState<string>("");
   const [noUserError, setNoUserError] = useState(false);
   const [noQuestionError, setNoQuestionError] = useState(false);
-  const [input, setInput] = useState<string>("");
   const [showTweets, setShowTweets] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
 
@@ -38,6 +43,8 @@ const HomePage = () => {
     } else {
       setNoUserError(false);
     }
+    setLoadingTweets(true);
+    setClickedTweets(true);
 
     const results = await fetch("/api/user/tweets", {
       method: "POST",
@@ -50,6 +57,7 @@ const HomePage = () => {
     }).then((res) => res.json());
 
     setTweets(results.data.data);
+    setLoadingTweets(false);
   };
 
   const handleSecondClick = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -93,7 +101,12 @@ const HomePage = () => {
           <input
             type="text"
             value={user}
-            onChange={(e) => setUser(e.target.value)}
+            onChange={(e) => {
+              setUser(e.target.value);
+              setClickedTweets(false);
+              setAnswer("");
+              setTweets([]);
+            }}
             className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
             placeholder="username"
           />
@@ -101,6 +114,20 @@ const HomePage = () => {
             <p className="text-red-600 text-md">Username can't be empty bro!</p>
           )}
         </div>
+        <button
+          className="text-white p-2 border-white border px-4 h-fit"
+          onClick={handleClick}
+        >
+          {clickedTweets ? (
+            loadingTweets ? (
+              <Image src={loadingGif} alt="loading" className="w-12" />
+            ) : (
+              <Image src={loadedPng} alt="loaded" className="w-12" />
+            )
+          ) : (
+            <span>get tweets</span>
+          )}
+        </button>
         <div className="flex flex-col gap-2">
           <input
             type="text"
@@ -113,12 +140,6 @@ const HomePage = () => {
             <p className="text-red-600 text-md">Question can't be empty bro!</p>
           )}
         </div>
-        <button
-          className="text-white p-2 border-white border px-4 h-fit"
-          onClick={handleClick}
-        >
-          get tweets
-        </button>
 
         <div className="relative group">
           <span
@@ -151,6 +172,11 @@ const HomePage = () => {
             {tweet.text}
           </p>
         ))}
+
+      <br />
+      <br />
+      <br />
+      <br />
 
       <Link href="https://github.com/Aadarsh805/metaTweet.ai">
         <div className="gap-2 inline-flex items-center justify-center h-10 px-3 text-xs bg-transparent text-white border border-gray-5 hover:bg-gray-4 hover:border-gray-4">
