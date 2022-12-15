@@ -59,10 +59,12 @@ const HomePage = () => {
   };
 
   const handleSecondClick = async (e: MouseEvent<HTMLButtonElement>) => {
+    console.log(tweets);
     e.preventDefault();
     console.log("clicked button second");
     setShowTweets(false);
     setShowAnswer(true);
+    setAnswer("");
 
     if (question === "") {
       setNoQuestionError(true);
@@ -93,6 +95,7 @@ const HomePage = () => {
   };
 
   let noTweets = tweets?.length < 1;
+  if (tweets === undefined) noTweets = true;
 
   return (
     <>
@@ -105,6 +108,7 @@ const HomePage = () => {
               setUser(e.target.value);
               setAnswer("");
               setTweets([]);
+              setLoadedTweets(false);
             }}
             className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
             placeholder="username"
@@ -122,7 +126,7 @@ const HomePage = () => {
           loading={loadingTweets}
           variant="contained"
         >
-          Submit
+          {loadedTweets && tweets ? "tweets loaded" : "get tweets"}
         </LoadingButton>
         <div className="flex flex-col gap-2">
           <input
@@ -137,7 +141,7 @@ const HomePage = () => {
           )}
         </div>
 
-        <div className="relative group">
+        <div className={`relative group ${noTweets && "cursor-not-allowed"}`}>
           <span
             className={`absolute bg-white text-yellow text-xs p-1 -bottom-[4rem] hidden ${
               noTweets && "group-hover:block"
@@ -147,10 +151,10 @@ const HomePage = () => {
           </span>
           <LoadingButton
             onClick={handleSecondClick}
-            className={`p-2 border-white border px-4 bg-white text-black
-            ${noTweets && "bg-red-500 text-black cursor-not-allowed"}`}
+            className={`p-2 border-white border px-4 bg-white text-black mui-disabled:bg-red`}
             loading={loadingData}
             variant="contained"
+            disabled={noTweets || !question}
           >
             give data
           </LoadingButton>
