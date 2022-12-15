@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: process.env.OPEN_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const completion = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: req.body.prompt,
-    temperature: 1,
+    temperature: 0.7,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
