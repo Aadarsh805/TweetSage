@@ -4,6 +4,8 @@ import Link from "next/link";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import tweets from "../pages/api/user/tweets";
+import { z } from "zod";
+
 type TweetData = {
   text: string | null | undefined;
 };
@@ -13,15 +15,30 @@ const HomePage = () => {
   const [question, setQuestion] = useState<string>("");
   const [tweets, setTweets] = useState<TweetData[]>([]);
   const [answer, setAnswer] = useState<string>("");
+  const [noUserError, setNoUserError] = useState(false);
+  const [noQuestionError, setNoQuestionError] = useState(false);
   const [input, setInput] = useState<string>("");
   const [showTweets, setShowTweets] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
 
+  useEffect(() => {
+    setUser("");
+    setQuestion("");
+    setTweets([]);
+    setAnswer("");
+  }, []);
+
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("clicked button");
     setShowTweets(true);
     setShowAnswer(false);
+
+    if (user === "") {
+      setNoUserError(true);
+      return;
+    } else {
+      setNoUserError(false);
+    }
 
     const results = await fetch("/api/user/tweets", {
       method: "POST",
@@ -41,6 +58,13 @@ const HomePage = () => {
     console.log("clicked button second");
     setShowTweets(false);
     setShowAnswer(true);
+
+    if (question === "") {
+      setNoQuestionError(true);
+      return;
+    } else {
+      setNoQuestionError(false);
+    }
 
     const prompt = `you are given some tweets below, read these tweets : \n
     ${tweets.map((tweet) => tweet.text + "\n")}
@@ -66,20 +90,30 @@ const HomePage = () => {
   return (
     <>
       <div className="flex items-center gap-5">
-        <input
-          type="text"
-          value={user}
-          onChange={(e) => setUser(e.target.value)}
-          className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
-          placeholder="username"
-        />
-        <input
-          type="text"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
-          placeholder="question"
-        />
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+            className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
+            placeholder="username"
+          />
+          {noUserError && (
+            <p className="text-red-600 text-xl">Username can't be empty bro!</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
+            placeholder="question"
+          />
+          {noQuestionError && (
+            <p className="text-red-600 text-xl">Username can't be empty bro!</p>
+          )}
+        </div>
         <button
           className="text-white p-2 border-white border px-4 h-fit"
           onClick={handleClick}
@@ -88,8 +122,11 @@ const HomePage = () => {
         </button>
 
         <button
-          className="text-white p-2 border-white border px-4 h-fit"
+          className={`text-white p-2 border-white border px-4 h-fit ${
+            tweets.length < 1 && "bg-red-500 text-black"
+          }`}
           onClick={handleSecondClick}
+          disabled={!tweets}
         >
           give data
         </button>
@@ -108,7 +145,7 @@ const HomePage = () => {
         </Link>
       </div>
 
-      {tweets ? (
+      {tweets &&
         tweets.map((tweet) => (
           <p
             className={`text-yellow-500 mt-2 font-bold text-2xl p-2 bg-gray-100 ${
@@ -118,12 +155,7 @@ const HomePage = () => {
           >
             {tweet.text}
           </p>
-        ))
-      ) : (
-        <p className="text-yellow-500 font-bold text-2xl p-2 bg-gray-100">
-          hfdsafjlk
-        </p>
-      )}
+        ))}
 
       {answer && (
         <p
@@ -131,9 +163,9 @@ const HomePage = () => {
             !showAnswer && "hidden"
           }`}
         >
-          {answer.split(/\d/).map((string, i) => (
+          {answer?.split(/\d+\./).map((string, i) => (
             <li className="flex" key={i}>
-              {string}
+              {i + 1 + ")"} {string}
             </li>
           ))}
         </p>
