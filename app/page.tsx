@@ -10,6 +10,7 @@ type TweetData = {
 
 const HomePage = () => {
   const [user, setUser] = useState<string>("");
+  const [question, setQuestion] = useState<string>("");
   const [tweets, setTweets] = useState<TweetData[]>([]);
   const [answer, setAnswer] = useState<string>("");
   const [input, setInput] = useState<string>("");
@@ -41,8 +42,10 @@ const HomePage = () => {
     setShowTweets(false);
     setShowAnswer(true);
 
-    const prompt = `you are given some tweets below, read these tweets and write a joke about the person who wrote those Tweets: \n
+    const prompt = `you are given some tweets below, read these tweets : \n
     ${tweets.map((tweet) => tweet.text + "\n")}
+
+    and about the person who wrote those Tweets ${question}
     `;
 
     const results = await fetch("/api/user/ai", {
@@ -67,7 +70,15 @@ const HomePage = () => {
           type="text"
           value={user}
           onChange={(e) => setUser(e.target.value)}
-          className="bg-white placeholder:text-black placeholder:text-lg border-none outline-none p-2"
+          className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
+          placeholder="username"
+        />
+        <input
+          type="text"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
+          placeholder="question"
         />
         <button
           className="text-white p-2 border-white border px-4 h-fit"
