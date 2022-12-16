@@ -8,6 +8,18 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.purple-color {
+  background-color: #cb79ff;
+}
+
+.dark-purple-color {
+  background-color: #7214ff;
+}
+
+.dark-blue-color {
+  background-color: #090426;
+}
+
 .copied::after {
   content: "";
   position: absolute;
@@ -40,7 +52,6 @@ body {
   100% {
     visibility: visible;
   }
-
 }
 
 .iIorBF{
