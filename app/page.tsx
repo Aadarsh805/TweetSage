@@ -4,7 +4,13 @@ import Link from "next/link";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import { LoadingButton } from "@mui/lab";
+import TextField from "@mui/material/TextField";
 import Image from "next/image";
+import { InputAdornment } from "@mui/material";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import styled from "@emotion/styled";
+import BlockIcon from "@mui/icons-material/Block";
+import { FormControl } from "@mui/material";
 
 type TweetData = {
   text: string | null | undefined;
@@ -67,14 +73,12 @@ const HomePage = () => {
     }).then((res) => res.json());
 
     setTweets(results.data.data);
-    console.log(results.data.includes.users[0]);
-    setUserProfile(results.data.includes.users[0]);
+    setUserProfile(results.data?.includes?.users[0]);
     setLoadingTweets(false);
     setLoadedTweets(true);
   };
 
   const handleSecondClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    console.log(tweets);
     e.preventDefault();
     console.log("clicked button second");
     setShowTweets(false);
@@ -131,73 +135,102 @@ const HomePage = () => {
     };
   }, [answer]);
 
+  const StyledButton = styled(LoadingButton)`
+    background-color: grey;
+    border: none;
+    &:hover {
+      background-color: #7214ff;
+    }
+  `;
+
   return (
     <>
-      <div className=" flex items-center gap-5 bg-black p-20">
-        <div className="flex flex-col gap-2">
-          <input
-            type="text"
+      <div className="flex flex-col gap-5 p-20 w-[50rem]">
+        <form
+          className="grid gap-5 grid-cols-3 w-full"
+          onSubmit={(e) => handleClick}
+        >
+          <TextField
+            label="Twitter Username"
+            error={noUserError || (loadedTweets && !tweets)}
+            autoComplete="off"
+            variant="outlined"
             value={user}
-            onChange={(e) => {
-              setUser(e.target.value);
+            onChange={(e: any) => {
+              setUser(e.currentTarget.value);
               setAnswer("");
               setTweets([]);
               setLoadedTweets(false);
+              setNoUserError(false);
             }}
-            className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
-            placeholder="username"
+            required
+            helperText={
+              noUserError
+                ? `Username can't be empty bro!`
+                : loadedTweets && !tweets && "username wrong"
+            }
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AlternateEmailIcon fontSize="small" />
+                </InputAdornment>
+              ),
+            }}
+            className="col-span-2"
           />
-          {noUserError && (
-            <p className="text-red-600 text-md">Username can't be empty bro!</p>
-          )}
-          {loadedTweets && !tweets && (
-            <p className="text-red-600 text-md">username wrong</p>
-          )}
-        </div>
-        <LoadingButton
-          onClick={handleClick}
-          className="hover:bg-gray-500 p-2 border-white border px-4 bg-white text-black"
-          loading={loadingTweets}
-          variant="contained"
-        >
-          {loadedTweets && tweets ? "tweets loaded" : "get tweets"}
-        </LoadingButton>
-        <div className="flex flex-col gap-2">
-          <input
-            type="text"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            className="bg-white placeholder:text-gray-400 placeholder:text-lg border-none outline-none p-2"
-            placeholder="question"
-          />
-          {noQuestionError && (
-            <p className="text-red-600 text-md">Question can't be empty bro!</p>
-          )}
-        </div>
+          <StyledButton
+            type="submit"
+            onClick={handleClick}
+            className="border bg-[#7214ff] text-white font-bold hover:opactiy-70 self-stretch"
+            loading={loadingTweets}
+            variant="contained"
+            disableFocusRipple
+            disabled={loadedTweets}
+          >
+            {loadedTweets && tweets ? "tweets loaded" : "get tweets"}
+          </StyledButton>
+        </form>
+        <TextField
+          label="Question"
+          error={noQuestionError}
+          autoComplete="off"
+          variant="outlined"
+          value={question}
+          onChange={(e: any) => setQuestion(e.currentTarget.value)}
+          className=""
+          required
+          helperText={noQuestionError && `Question can't be empty bro!`}
+        />
 
-        <div className={`relative group ${noTweets && "cursor-not-allowed"}`}>
-          <span
-            className={`absolute bg-white text-yellow text-xs p-1 -bottom-[4rem] hidden ${
-              noTweets && "group-hover:block"
+        <div
+          className={`relative group w-full flex ${
+            noTweets && "cursor-not-allowed"
+          }`}
+        >
+          <div
+            className={`absolute bg-[#7214ff] rounded-lg px-3  p-2 font-semibold -bottom-2/3 left-1/2 -translate-x-1/2 hidden ${
+              noTweets && "group-hover:flex"
             }`}
           >
-            Get tweets first bro!
-          </span>
-          <LoadingButton
+            <span className="text-xs text-white">Get tweets first!</span>
+          </div>
+          <StyledButton
             onClick={handleSecondClick}
-            className={`hover:bg-gray-500 p-2 border-white border px-4 bg-white text-black mui-disabled:bg-red`}
+            className={`border bg-[#7214ff] text-white font-bold hover:opactiy-70 w-full p-4`}
             loading={loadingData}
             variant="contained"
-            disabled={noTweets || !question}
+            disabled={noTweets}
+            disableFocusRipple
+            loadingIndicator="Getting answer..."
           >
-            give data
-          </LoadingButton>
+            Get answer
+          </StyledButton>
         </div>
       </div>
 
       {tweets && (
         <div className="flex flex-col gap-4">
-          {userProfile.username !== "" && (
+          {userProfile?.username !== "" && loadedTweets && (
             <div className="flex gap-2 items-center">
               <Image
                 src={userProfile?.profile_image_url}
@@ -207,11 +240,13 @@ const HomePage = () => {
                 height={10}
               />
               <div className="flex flex-col">
-                <p className="text-xl font-bold text-red">{userProfile.name}</p>
                 <p className="text-xl font-bold text-red">
-                  @{userProfile.username}
+                  {userProfile?.name}
                 </p>
-                </div>
+                <p className="text-xl font-bold text-red">
+                  @{userProfile?.username}
+                </p>
+              </div>
             </div>
           )}
 
