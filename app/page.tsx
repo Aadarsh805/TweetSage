@@ -10,6 +10,7 @@ import { InputAdornment } from "@mui/material";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import styled from "@emotion/styled";
 import BlockIcon from "@mui/icons-material/Block";
+import { FormControl } from "@mui/material";
 
 type TweetData = {
   text: string | null | undefined;
@@ -72,14 +73,12 @@ const HomePage = () => {
     }).then((res) => res.json());
 
     setTweets(results.data.data);
-    console.log(results.data.includes.users[0]);
-    setUserProfile(results.data.includes.users[0]);
+    setUserProfile(results.data?.includes?.users[0]);
     setLoadingTweets(false);
     setLoadedTweets(true);
   };
 
   const handleSecondClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    console.log(tweets);
     e.preventDefault();
     console.log("clicked button second");
     setShowTweets(false);
@@ -147,9 +146,14 @@ const HomePage = () => {
   return (
     <>
       <div className="flex flex-col gap-5 p-20 w-[50rem]">
-        <div className="grid gap-5 grid-cols-3 w-full">
+        <form
+          className="grid gap-5 grid-cols-3 w-full"
+          onSubmit={(e) => handleClick}
+        >
           <TextField
             label="Twitter Username"
+            error={noUserError || (loadedTweets && !tweets)}
+            autoComplete="off"
             variant="outlined"
             value={user}
             onChange={(e: any) => {
@@ -157,6 +161,7 @@ const HomePage = () => {
               setAnswer("");
               setTweets([]);
               setLoadedTweets(false);
+              setNoUserError(false);
             }}
             required
             helperText={
@@ -174,6 +179,7 @@ const HomePage = () => {
             className="col-span-2"
           />
           <StyledButton
+            type="submit"
             onClick={handleClick}
             className="border bg-[#7214ff] text-white font-bold hover:opactiy-70 self-stretch"
             loading={loadingTweets}
@@ -183,9 +189,11 @@ const HomePage = () => {
           >
             {loadedTweets && tweets ? "tweets loaded" : "get tweets"}
           </StyledButton>
-        </div>
+        </form>
         <TextField
           label="Question"
+          error={noQuestionError}
+          autoComplete="off"
           variant="outlined"
           value={question}
           onChange={(e: any) => setQuestion(e.currentTarget.value)}
@@ -211,17 +219,18 @@ const HomePage = () => {
             className={`border bg-[#7214ff] text-white font-bold hover:opactiy-70 w-full p-4`}
             loading={loadingData}
             variant="contained"
-            disabled={noTweets || !question}
+            disabled={noTweets}
             disableFocusRipple
+            loadingIndicator="Getting answer..."
           >
-            give data
+            Get answer
           </StyledButton>
         </div>
       </div>
 
       {tweets && (
         <div className="flex flex-col gap-4">
-          {userProfile.username !== "" && loadedTweets && (
+          {userProfile?.username !== "" && loadedTweets && (
             <div className="flex gap-2 items-center">
               <Image
                 src={userProfile?.profile_image_url}
@@ -231,9 +240,11 @@ const HomePage = () => {
                 height={10}
               />
               <div className="flex flex-col">
-                <p className="text-xl font-bold text-red">{userProfile.name}</p>
                 <p className="text-xl font-bold text-red">
-                  @{userProfile.username}
+                  {userProfile?.name}
+                </p>
+                <p className="text-xl font-bold text-red">
+                  @{userProfile?.username}
                 </p>
               </div>
             </div>
