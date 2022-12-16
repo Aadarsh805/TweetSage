@@ -21,3 +21,21 @@ body {
   z-index: -10;
   transform: rotate(15deg);
 }
+
+.typing-effect:after {
+  content: "|";
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  0% {
+    visibility: hidden;
+  }
+  50% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
+
+}
