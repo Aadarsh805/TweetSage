@@ -206,10 +206,12 @@ const HomePage = () => {
                 width={10}
                 height={10}
               />
-              <p className="text-xl font-bold text-red">{userProfile.name}</p>
-              <p className="text-xl font-bold text-red">
-                @{userProfile.username}
-              </p>
+              <div className="flex flex-col">
+                <p className="text-xl font-bold text-red">{userProfile.name}</p>
+                <p className="text-xl font-bold text-red">
+                  @{userProfile.username}
+                </p>
+                </div>
             </div>
           )}
 
