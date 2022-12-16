@@ -9,6 +9,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const data = await client.tweets.tweetsRecentSearch({
       query: `(from:${req.body.user}) -is:retweet -is:reply -is:quote`,
       max_results: 10,
+      expansions: ["author_id"],
+      "user.fields": [
+        "name",
+        "profile_image_url",
+      ],
     });
     res.status(200).json({ data });
   } catch (err) {

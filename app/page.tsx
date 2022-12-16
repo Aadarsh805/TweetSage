@@ -4,13 +4,25 @@ import Link from "next/link";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import { LoadingButton } from "@mui/lab";
+import Image from "next/image";
 
 type TweetData = {
   text: string | null | undefined;
 };
 
+type UserData = {
+  profile_image_url: string;
+  username: string;
+  name: string;
+};
+
 const HomePage = () => {
   const [user, setUser] = useState<string>("");
+  const [userProfile, setUserProfile] = useState<UserData>({
+    profile_image_url: "",
+    username: "",
+    name: "",
+  });
   const [question, setQuestion] = useState<string>("");
   const [tweets, setTweets] = useState<TweetData[]>([]);
   const [loadingTweets, setLoadingTweets] = useState(false);
@@ -55,6 +67,8 @@ const HomePage = () => {
     }).then((res) => res.json());
 
     setTweets(results.data.data);
+    console.log(results.data.includes.users[0]);
+    setUserProfile(results.data.includes.users[0]);
     setLoadingTweets(false);
     setLoadedTweets(true);
   };
@@ -181,17 +195,36 @@ const HomePage = () => {
         </div>
       </div>
 
-      {tweets &&
-        tweets.map((tweet) => (
-          <p
-            className={`text-yellow-500 mt-2 font-bold text-2xl p-2 bg-gray-100 ${
-              !showTweets && "hidden"
-            }`}
-            key={tweet.text}
-          >
-            {tweet.text}
-          </p>
-        ))}
+      {tweets && (
+        <div className="flex flex-col gap-4">
+          {userProfile.username !== "" && (
+            <div className="flex gap-2 items-center">
+              <Image
+                src={userProfile?.profile_image_url}
+                alt="user-image"
+                className="w-10 h-10 rounded-full border-2 border-red flex items-center justify-center"
+                width={10}
+                height={10}
+              />
+              <p className="text-xl font-bold text-red">{userProfile.name}</p>
+              <p className="text-xl font-bold text-red">
+                @{userProfile.username}
+              </p>
+            </div>
+          )}
+
+          {tweets.map((tweet) => (
+            <p
+              className={`text-yellow-500 mt-2 font-bold text-2xl p-2 bg-gray-100 ${
+                !showTweets && "hidden"
+              }`}
+              key={tweet.text}
+            >
+              {tweet.text}
+            </p>
+          ))}
+        </div>
+      )}
 
       {answer && (
         <div
