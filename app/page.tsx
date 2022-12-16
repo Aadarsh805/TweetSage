@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import { LoadingButton } from "@mui/lab";
 
 type TweetData = {
@@ -193,18 +192,6 @@ const HomePage = () => {
             {tweet.text}
           </p>
         ))}
-
-      <br />
-      <br />
-      <br />
-      <br />
-
-      <Link href="https://github.com/Aadarsh805/metaTweet.ai">
-        <div className="gap-2 inline-flex items-center justify-center h-10 px-3 text-xs bg-transparent text-white border border-gray-5 hover:bg-gray-4 hover:border-gray-4">
-          <GitHubIcon fontSize="small" />
-          <span className="text-[.9rem]">Star us on github</span>
-        </div>
-      </Link>
 
       {answer && (
         <div

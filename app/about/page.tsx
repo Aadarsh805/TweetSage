@@ -2,7 +2,6 @@
 
 import React, { FC, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { ColorRing } from "react-loader-spinner";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import copy from "copy-to-clipboard";
 import Link from "next/link";
@@ -52,17 +51,7 @@ const Page = () => {
             >
               Get Tweets
             </button>
-            {loading && (
-              <ColorRing
-                visible={true}
-                height="80"
-                width="80"
-                ariaLabel="blocks-loading"
-                wrapperStyle={{}}
-                wrapperClass="blocks-wrapper"
-                colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-              />
-            )}
+            {loading && <p>loading...</p>}
           </div>
           <div className="mt-5 flex flex-col w-full gap-2">
             <TextField
