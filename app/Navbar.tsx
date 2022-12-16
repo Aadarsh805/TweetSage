@@ -4,7 +4,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 
 const Navbar = () => {
     return (
-        <nav className="absolute z-50 top-0  w-full flex items-center justify-between text-white   md:px-40 py-4 ">
+        <nav className="absolute z-50 top-0  w-full flex items-center justify-between text-white   md:px-40 py-4 px-5 ">
             <div className="flex items-center justify-center gap-5">
                 <h2 className="font-bold text-lg tracking-wider text-[#0EA5E9] cursor-pointer md:text-2xl lg:text-3xl">
                     Tweet Sage

@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html>
       <head />
-      <body className="bg-[#EFF5F5]" >
+      <body className="bg-white" >
       <Navbar />
       <div className="mt-[3.2rem] h-screen">
 
