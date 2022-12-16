@@ -21,6 +21,9 @@ body {
   z-index: -10;
   transform: rotate(15deg);
 }
+.example::-webkit-scrollbar {
+  display: none;
+}
 
 .typing-effect:after {
   content: "|";

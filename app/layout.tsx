@@ -3,6 +3,7 @@
 import "../styles/globals.css";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
+import Navbar from "./Navbar";
 
 const theme = createTheme({
   palette: {
@@ -22,8 +23,12 @@ export default function RootLayout({
   return (
     <html>
       <head />
-      <body className="bg-black">
+      <body className="bg-[#EFF5F5]" >
+      <Navbar />
+      <div className="mt-[3.2rem] h-screen">
+
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </div>
       </body>
     </html>
   );

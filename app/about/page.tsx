@@ -1,8 +1,9 @@
 "use client";
 
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+import CloseIcon from '@mui/icons-material/Close';
 import copy from "copy-to-clipboard";
 import Link from "next/link";
 
@@ -14,7 +15,8 @@ const exampleQuestion = [
 ];
 const Page = () => {
   const [loading, setLoading] = useState(false);
-  const [copyText, setCopyText] = useState("");
+  const [showData, setShowData] = useState(false)
+
 
   const handleClick = () => {
     setLoading(true);
@@ -26,16 +28,26 @@ const Page = () => {
     return () => clearTimeout(timer);
   };
 
+  const handleDataClick = () => {
+    setShowData(true)
+  }
+
+  const handleOverlay = () => {
+    setShowData(false)
+  }
+
+
+  
   return (
-    <div className="bg-[#E8D7F1] w-full h-full flex flex-col items-center  mx-auto">
+    <div onClick={handleOverlay} className="bg-[#fff8fb] w-full h-screen  flex flex-col items-center mx-auto">
       <div className="text-center my-20 flex flex-col item-center gap-2">
         {/* <h4 className='font-bold text-[#0EA5E9] text-xl tracking-wider'>Tweet Sage</h4> */}
-        <p className="text-3xl sm:text-4xl lg:text-5xl font-semibold  w-[13em] sm:w-[14em] md:w-[15em] lg:w-[17em] text-[#932F6D]">
+        <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold  w-[13em] sm:w-[14em] md:w-[15em] lg:w-[17em] text-[#932F6D]">
           Tweet Sage: Because your tweets deserve some sage advice.
         </p>
       </div>
-      <div className="flex flex-col-reverse items-center justify-center">
-        <div className="text-center flex flex-col items-center justify-center w-[20em]">
+      <div className="flex flex-col-reverse lg:flex-row lg:gap-20 items-center justify-center">
+        <div className="text-center flex flex-col items-center justify-center w-[20em] mb-20">
           <p className="text-xl sm:text-2xl mb-8 font-semibold">
             What do you want to know about the person?
           </p>
@@ -47,7 +59,7 @@ const Page = () => {
             />
             <button
               onClick={handleClick}
-              className="bg-[#0EA5E9] py-2 px-10 font-bold text-white"
+              className="bg-[#0EA5E9] py-2 px-10 font-bold text-white "
             >
               Get Tweets
             </button>
@@ -59,41 +71,66 @@ const Page = () => {
               variant="outlined"
               placeholder="Enter your question"
             />
-            <button className="bg-[#0EA5E9] mr-10 w-full py-2 text-white font-bold">
+            <button onClick={e => {
+              e.stopPropagation()
+              handleDataClick()
+              }} className="bg-[#0EA5E9] mr-10 w-full py-2 text-white font-bold ">
               Get Data
             </button>
           </div>
         </div>
-        <Link href="/start">
-          <button className="bg-[#0EA5E9] py-3 px-5 mt-20">Go to start</button>
-        </Link>
 
-        <div>
+
+        <div className="">
           <h2 className="font-semibold text-lg">Try these questions:</h2>
-          <div className="bg-white w-[20em] h-full mb-10 pt-3 pb-2 px-4">
+          <div className=" example bg-white lg:shadow-lg shadow-md w-[20em] h-[8em] mb-10 pt-3 pb-1 px-4  overflow-scroll lg:overflow-visible lg:h-full">
             <div className="flex items-center gap-2 mb-4">
               <span className="w-4 h-4 rounded-full bg-[#C884A6]"></span>
               <span className="w-4 h-4 rounded-full bg-[#FFE74C]"></span>
               <span className="w-4 h-4 rounded-full bg-[#81F495]"></span>
             </div>
 
-            <div className=" mt-2">
+            <div className=" mt-2 ">
               <Examples />
             </div>
           </div>
         </div>
       </div>
+      <Link href="/start">
+        <button className="bg-[#0EA5E9] mr-10 px-4 py-2 text-white font-bold">Get to Start</button>
+      </Link>
+
+      {showData && <div  className="absolute top-0 right-0 bg-[rgba(0,0,0,.5)] w-full h-screen flex items-center justify-center">
+        <div className=" bg-white lg:shadow-lg shadow-md lg:max-w-[40em] w-[22em] md:w-[30em] mb-10 py-4 px-4 z-20">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center  gap-2 ">
+              <span className="w-4 h-4 rounded-full bg-[#C884A6]"></span>
+              <span className="w-4 h-4 rounded-full bg-[#FFE74C]"></span>
+              <span className="w-4 h-4 rounded-full bg-[#81F495]"></span>
+            </div>
+            <div>
+              <CloseIcon onClick={handleOverlay} className="cursor-pointer" />
+
+            </div>
+
+          </div>
+          <div>
+            {/* <p>"Haste makes waste."</p>
+            <p>"Actions speak louder than words."</p>
+            <p>"Look before you leap."</p>
+            <p>"Don't put all your eggs in one basket."</p>
+            <p>"The early bird gets the worm."</p> */}
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi id dolores deserunt, illum ipsum, tenetur eum quod reprehenderit qui neque laborum perspiciatis fugiat amet? Assumenda enim harum ab repellat similique dolores culpa deleniti, voluptate, ad, expedita vitae obcaecati? Voluptates, enim saepe? Odio voluptate vitae reprehenderit enim neque possimus ad veniam libero nobis fuga. Est omnis non vel repellendus temporibus eveniet dolor aliquam ab dolorem soluta aspernatur sunt tempora nulla sed totam tempore autem reiciendis repellat corporis eaque, quia placeat, rem laborum? Soluta ipsam doloribus veniam molestias atque eos placeat impedit officiis esse aliquam libero necessitatibus, ullam non. Asperiores, voluptatem unde.
+          </div>
+        </div>
+      </div>}
+
     </div>
   );
 };
 
 export default Page;
 
-// 1. Tell me about the person
-// 2. Tell me 5 jokes on that person
-// 3. How will u describe the person above
-// 4. Tell 5 good points on this person
-// 5. Tell something about the person in a sentence
 
 const Examples: FC = () => {
   return (

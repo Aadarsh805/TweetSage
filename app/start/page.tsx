@@ -2,42 +2,35 @@
 
 import Link from "next/link";
 import React from "react";
-import GitHubIcon from "@mui/icons-material/GitHub";
-
+import Page from "../about/page";
+import Navbar from "../Navbar";
+import boba from 'public/boba.png'
+import boba2 from 'public/boba2.png'
+import boba3 from 'public/boba501.png'
+import boba4 from 'public/boba502.png'
+import boba5 from 'public/boba501.png'
+import Image from "next/image";
+import bgImage from 'public/bgImg.jpg'
 const page = () => {
   return (
-    <div className="relative  overflow-hidden">
-      <nav className="absolute w-full flex items-center justify-between text-white p-10">
-        <div className="flex items-center justify-center gap-5">
-          {/* <span className='bg-[red] w-10'>logo</span> */}
-          <h2 className="font-bold text-2xl tracking-wider text-[#0EA5E9]">
-            Tweet Sage
-          </h2>
-        </div>
-        <Link href="https://github.com/Aadarsh805/metaTweet.ai">
-          <div className="gap-2 inline-flex items-center justify-center h-10 px-3 text-xs bg-transparent text-white border border-gray-5 hover:bg-gray-4 hover:border-gray-4">
-            <GitHubIcon fontSize="small" />
-            <span className="text-[.9rem]">Star us on github</span>
-          </div>
-        </Link>
-      </nav>
-
-      <div className="z-10 text-white flex flex-col items-center justify-center h-screen w-[78em] mx-auto text-center gap-6 lg:w-[78em] md:w-[60em] sm:w-[50em]">
-        <h1 className="font-extrabold text-7xl leading-[1em]">
+    <div className=" overflow-hidden   mt-20  w-full flex items-center h-[80vh]  justify-between px-40">
+      {/* <Image src={bgImage} alt="bg-image" className="w-full absolute z-100" /> */}
+      <div className="z-40  text-white flex mb-20 flex-col items-start   w-[60em] gap-6">
+        <h1 className="font-extrabold text-4xl  lg:text-5xl leading-[1em] text-black">
           Where even your most ridiculous tweets can reveal hidden truths{" "}
         </h1>
-        <p className="text-slate-400 w-[44em] text-xl">
-          A utility-first CSS framework packed with classes like flex, pt-4,
-          text-center and rotate-90 that can be composed to build any design,
-          directly in your markup.{" "}
+        <p className="text-[#758297] w-full  lg:w-[40em] text-md lg:text-xl ">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas, soluta veniam. Facilis incidunt temporibus iure velit culpa. Ipsa, autem quo!
         </p>
         <Link href="/about">
           <button className="bg-[#0EA5E9] py-2 px-5 rounded-md font-semibold ">
             Get Started
           </button>
         </Link>
-        {/* <button className='bg-[#0EA5E9] py-2 px-5 rounded-md font-semibold '>Get Started</button> */}
       </div>
+
+      <Image src={boba5} alt="bobo" className=" w-[30rem]" />
+
+      {/* <Page /> */}
     </div>
   );
 };
