@@ -9,7 +9,6 @@ import Example from "./Example";
 import Form from "./Form";
 import Slogan from "./Slogan";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import gif from "public/gif.gif"
 
 const page = () => {
   const [answer, setAnswer] = useState<string>("");
@@ -43,7 +42,6 @@ const page = () => {
               soluta veniam. Facilis incidunt temporibus iure velit culpa. Ipsa,
               autem quo!
             </p>
-
           </div>
 
           <button
@@ -65,14 +63,13 @@ const page = () => {
               </p>
             </div>
             <div className="bg-[#f8f9fd] sm:h-[17.5rem] h-full px-4 py-2 rounded-lg z-[20]  ">
-              <div className=" w-full h-full">
-                {/* <video autoPlay muted className="z-50 h-full w-full "  controls={true}>
-                  <source src="../public/gif.mp4" type="video/mp4"  />
-                  abcd
-                </video> */}
-                {/* <Image src={gif} alt='guide-gif' className="w-[200%] z-50 h-full" /> */}
-                
-              </div>
+              <ul>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+              </ul>
             </div>
           </div>
 
@@ -84,7 +81,7 @@ const page = () => {
             <Slogan />
             <Form
               answer={answer}
-              setAnswer={setAnswer}
+              setAnswer={setAnswer} 
               displayedText={displayedText}
               setDisplayedText={setDisplayedText}
             />
