@@ -1,290 +1,125 @@
 "use client";
 
-import Link from "next/link";
-import { MouseEvent, useCallback, useEffect, useState } from "react";
-import useSWR from "swr";
-import { LoadingButton } from "@mui/lab";
-import TextField from "@mui/material/TextField";
+import React, { useRef, useState } from "react";
+import Navbar from "./Navbar";
 import Image from "next/image";
-import { InputAdornment } from "@mui/material";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import styled from "@emotion/styled";
-import BlockIcon from "@mui/icons-material/Block";
-import { FormControl } from "@mui/material";
+import bgImage from "public/bg-curve.png";
+import Answers from "./Answers";
+import Example from "./Example";
+import Form from "./Form";
+import Slogan from "./Slogan";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
-type TweetData = {
-  text: string | null | undefined;
-};
-
-type UserData = {
-  profile_image_url: string;
-  username: string;
-  name: string;
-};
-
-const HomePage = () => {
-  const [user, setUser] = useState<string>("");
-  const [userProfile, setUserProfile] = useState<UserData>({
-    profile_image_url: "",
-    username: "",
-    name: "",
-  });
-  const [question, setQuestion] = useState<string>("");
-  const [tweets, setTweets] = useState<TweetData[]>([]);
-  const [loadingTweets, setLoadingTweets] = useState(false);
-  const [loadingData, setLoadingData] = useState(false);
-  const [loadedTweets, setLoadedTweets] = useState(false);
+const page = () => {
   const [answer, setAnswer] = useState<string>("");
-  const [noUserError, setNoUserError] = useState(false);
-  const [noQuestionError, setNoQuestionError] = useState(false);
-  const [showTweets, setShowTweets] = useState(false);
-  const [showAnswer, setShowAnswer] = useState(false);
   const [displayedText, setDisplayedText] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
 
-  useEffect(() => {
-    setUser("");
-    setQuestion("");
-    setTweets([]);
-    setAnswer("");
-  }, []);
+  const transitionRef = useRef<null | HTMLInputElement>(null);
 
-  const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setShowTweets(true);
-    setShowAnswer(false);
-
-    if (user === "") {
-      setNoUserError(true);
-      return;
-    } else {
-      setNoUserError(false);
-    }
-    setLoadingTweets(true);
-
-    const results = await fetch("/api/user/tweets", {
-      method: "POST",
-      body: JSON.stringify({
-        user,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
-
-    setTweets(results.data.data);
-    setUserProfile(results.data?.includes?.users[0]);
-    setLoadingTweets(false);
-    setLoadedTweets(true);
+  const handleScroll = () => {
+    transitionRef!.current!.style.transform = `translateY(-200vh)`;
   };
-
-  const handleSecondClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log("clicked button second");
-    setShowTweets(false);
-    setShowAnswer(true);
-    setAnswer("");
-
-    if (question === "") {
-      setNoQuestionError(true);
-      return;
-    } else {
-      setNoQuestionError(false);
-    }
-    setLoadingData(true);
-
-    const prompt = `you are given some tweets below, read these tweets : \n
-    ${tweets.map((tweet) => tweet.text + "\n")}
-
-    and about the person who wrote those Tweets ${question}
-    `;
-
-    const results = await fetch("/api/user/ai", {
-      method: "POST",
-      body: JSON.stringify({
-        prompt,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
-
-    setAnswer(results.result.choices[0].text);
-    setLoadingData(false);
-  };
-
-  let noTweets = tweets?.length < 1;
-  if (tweets === undefined) noTweets = true;
-
-  // typing effect
-
-  useEffect(() => {
-    let index = 0;
-
-    const typing = setInterval(() => {
-      setDisplayedText(`${answer.substring(0, index)}`);
-      index++;
-
-      if (index > answer.length) {
-        clearInterval(typing);
-      }
-    }, 10);
-
-    return () => {
-      clearInterval(typing);
-    };
-  }, [answer]);
-
-  const StyledButton = styled(LoadingButton)`
-    background-color: grey;
-    border: none;
-    &:hover {
-      background-color: #7214ff;
-    }
-  `;
 
   return (
     <>
-      <div className="flex flex-col gap-5 p-20 w-[50rem]">
-        <form
-          className="grid gap-5 grid-cols-3 w-full"
-          onSubmit={(e) => handleClick}
-        >
-          <TextField
-            label="Twitter Username"
-            error={noUserError || (loadedTweets && !tweets)}
-            autoComplete="off"
-            variant="outlined"
-            value={user}
-            onChange={(e: any) => {
-              setUser(e.currentTarget.value);
-              setAnswer("");
-              setTweets([]);
-              setLoadedTweets(false);
-              setNoUserError(false);
-            }}
-            required
-            helperText={
-              noUserError
-                ? `Username can't be empty bro!`
-                : loadedTweets && !tweets && "username wrong"
-            }
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AlternateEmailIcon fontSize="small" />
-                </InputAdornment>
-              ),
-            }}
-            className="col-span-2"
-          />
-          <StyledButton
-            type="submit"
-            onClick={handleClick}
-            className="border bg-[#7214ff] text-white font-bold hover:opactiy-70 self-stretch"
-            loading={loadingTweets}
-            variant="contained"
-            disableFocusRipple
-            disabled={loadedTweets}
-          >
-            {loadedTweets && tweets ? "tweets loaded" : "get tweets"}
-          </StyledButton>
-        </form>
-        <TextField
-          label="Question"
-          error={noQuestionError}
-          autoComplete="off"
-          variant="outlined"
-          value={question}
-          onChange={(e: any) => setQuestion(e.currentTarget.value)}
-          className=""
-          required
-          helperText={noQuestionError && `Question can't be empty bro!`}
-        />
-
-        <div
-          className={`relative group w-full flex ${
-            noTweets && "cursor-not-allowed"
-          }`}
-        >
-          <div
-            className={`absolute bg-[#7214ff] rounded-lg px-3  p-2 font-semibold -bottom-2/3 left-1/2 -translate-x-1/2 hidden ${
-              noTweets && "group-hover:flex"
-            }`}
-          >
-            <span className="text-xs text-white">Get tweets first!</span>
+      <Image
+        src={bgImage}
+        alt="curve-image"
+        className="w-[70rem] min-w-[65rem] absolute top-[19em] sm:top-[14em] md:top-[68%] right-2/4 translate-x-[50%] translate-y-[-50%] -z-[5] "
+      />
+      <div
+        ref={transitionRef}
+        className="flex flex-col relative transition-all duration-500 ease-linear h-screen gap-[100vh]"
+      >
+        <div className="mt-24 flex flex-col items-center justify-center gap-10 relative px-10">
+          <div className="flex z-[20] flex-col items-center justify-center text-center gap-2 max-w-[48em] ">
+            <p className="text-[#6804fd] font-semibold">Setup, easy peasy</p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl lg:font-semibold font-bold leading-[2.3rem]">
+              Where even your most ridiculous tweets can reveal hidden truths{" "}
+            </h1>
+            <p className="text-[14px] md:text-[16px] lg:text-[17px]">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas,
+              soluta veniam. Facilis incidunt temporibus iure velit culpa. Ipsa,
+              autem quo!
+            </p>
           </div>
-          <StyledButton
-            onClick={handleSecondClick}
-            className={`border bg-[#7214ff] text-white font-bold hover:opactiy-70 w-full p-4`}
-            loading={loadingData}
-            variant="contained"
-            disabled={noTweets}
-            disableFocusRipple
-            loadingIndicator="Getting answer..."
+
+          <button
+            onClick={handleScroll}
+            className="bg-[#1956f3] z-[20] text-white py-3 text-lg hover:bg-[#1957f3ca] transition duration-300 px-5 rounded-full font-semibold lg:mb-8"
           >
-            Get answer
-          </StyledButton>
+            Get Started
+          </button>
+
+          <div className="example w-full max-w-[40em] sm:h-[22rem] bg-white px-3 py-3 shadow-xl rounded-xl z-[10] overflow-y-scroll">
+            <div className="flex w-full relative gap-5 items-center justify-center mb-4 z-[30]">
+              <div className="flex absolute left-2 items-center justify-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-[#fa85a4]"></span>
+                <span className="w-3 h-3 rounded-full bg-[#ffe56e]"></span>
+                <span className="w-3 h-3 rounded-full bg-[#52e282]"></span>
+              </div>
+              <p className="text-white py-1 px-5 rounded-full bg-[#7214ff]">
+                Guide
+              </p>
+            </div>
+            <div className="bg-[#f8f9fd] sm:h-[17.5rem] h-full px-4 py-2 rounded-lg z-[20]  ">
+              <ul>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* <Image src={boba5} alt="bobo" className=" w-[30rem]" /> */}
+        </div>
+
+        <div className="mt-60 h-screen w-full flex flex-col items-center justify-center relative z-30">
+          <div className="flex flex-col items-center z-30">
+            <Slogan />
+            <Form
+              answer={answer}
+              setAnswer={setAnswer}
+              displayedText={displayedText}
+              setDisplayedText={setDisplayedText}
+            />
+          </div>
+          <Example />
+          <Answers answer={answer} displayedText={displayedText} />
+
+          <div
+            role="button"
+            onClick={() => {
+              transitionRef!.current!.style.transform = `translateY(0)`;
+            }}
+            className="absolute bottom-0 right-20 w-12 h-12 rounded-full shadow-2xl transition duration-300 hover:bg-[#7214fff1] bg-[#7214ff] flex items-center justify-center"
+          >
+            <ArrowUpwardIcon className="text-white" />
+          </div>
         </div>
       </div>
-
-      {tweets && (
-        <div className="flex flex-col gap-4">
-          {userProfile?.username !== "" && loadedTweets && (
-            <div className="flex gap-2 items-center">
-              <Image
-                src={userProfile?.profile_image_url}
-                alt="user-image"
-                className="w-10 h-10 rounded-full border-2 border-red flex items-center justify-center"
-                width={10}
-                height={10}
-              />
-              <div className="flex flex-col">
-                <p className="text-xl font-bold text-red">
-                  {userProfile?.name}
-                </p>
-                <p className="text-xl font-bold text-red">
-                  @{userProfile?.username}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {tweets.map((tweet) => (
-            <p
-              className={`text-yellow-500 mt-2 font-bold text-2xl p-2 bg-gray-100 ${
-                !showTweets && "hidden"
-              }`}
-              key={tweet.text}
-            >
-              {tweet.text}
-            </p>
-          ))}
-        </div>
-      )}
-
-      {answer && (
-        <div
-          className={`mt-2 font-bold text-2xl p-2 bg-yellow-100 typing-effect ${
-            !showAnswer && "hidden"
-          }`}
-        >
-          <>{displayedText}</>
-        </div>
-      )}
     </>
   );
 };
 
-export default HomePage;
+export default page;
 
 {
-  /* <p className="text-white font-bold text-3xl">{text}</p>
-{isTyping && <span>|</span>} */
+  /* <p className="text-black">Setup, easy peasy</p>
+<h1 className="font-extrabold text-4xl  lg:text-5xl leading-[1em] text-black">
+  Where even your most ridiculous tweets can reveal hidden truths{" "}
+</h1>
+<p className="text-[#758297] w-full  lg:w-[40em] text-md lg:text-xl ">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas, soluta veniam. Facilis incidunt temporibus iure velit culpa. Ipsa, autem quo!
+</p>
+<Link href="/about">
+  <button className="bg-[#0EA5E9] py-2 px-5 rounded-md font-semibold ">
+    Get Started
+  </button>
+</Link> */
 }
 
-// {answer?.split(/\d+\./).map((string, i) => (
-//   <li className="flex" key={i}>
-//     {i + 1 + ")"} {string}
-//   </li>
-// ))}
+// sm:w-[26em] md:w-[32em] lg:w-[34em]  sm:h-[17em] md:h-[18em] lg:h-[20em]
+
+// sm:w-[23.5em] md:w-[30em] lg:w-[32em] sm:h-[13em] md:h-[14em] lg:h-[16em]

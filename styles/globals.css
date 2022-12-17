@@ -4,8 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Inter", sans-serif;
+}
+
+* {
+  -webkit-user-drag: none;
 }
 
 .purple-color {
@@ -33,37 +41,30 @@ body {
   z-index: -10;
   transform: rotate(15deg);
 }
-.example::-webkit-scrollbar {
+
+.example::-webkit-scrollbar,
+.answer::-webkit-scrollbar {
   display: none;
 }
 
 .typing-effect:after {
-  content: "|";
+  content: "^";
   animation: blink 1s linear infinite;
 }
 
 @keyframes blink {
   0% {
-    visibility: hidden;
+    opacity: 1;
   }
   50% {
-    visibility: hidden;
+    opacity: 0;
   }
   100% {
-    visibility: visible;
+    opacity: 1;
   }
 }
 
-.iIorBF{
-
-  width: 444px;
-  height: 96px;
-  position: absolute;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  user-select: none;
-  cursor: text;
-  margin: 0px auto;
+.cursor {
+  display: inline-block;
+  animation: blink 1s infinite;
 }
