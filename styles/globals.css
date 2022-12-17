@@ -28,20 +28,6 @@ body {
   background-color: #090426;
 }
 
-.copied::after {
-  content: "";
-  position: absolute;
-  left: -1px;
-  bottom: -5px;
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 8px solid black;
-  z-index: -10;
-  transform: rotate(15deg);
-}
-
 .example::-webkit-scrollbar,
 .answer::-webkit-scrollbar {
   display: none;
@@ -67,6 +53,24 @@ body {
 .cursor {
   display: inline-block;
   animation: blink 1s infinite;
+}
+
+* {
+  outline: none;
+}
+
+.bot-chat::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -8px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 12px solid white;
+  z-index: -10;
 }
 
 /* @media (max-width: 460px) {

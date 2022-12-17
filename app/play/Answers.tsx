@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import bgImage from "public/bg-curve.png";
+import React, { use, useEffect, useRef, useState } from "react";
+import bot from "public/bot.png";
+import Image from "next/image";
 
 type AnswerProp = {
   answer: string;
@@ -21,7 +22,37 @@ const Answers = ({ answer, displayedText }: AnswerProp) => {
   // }, [displayedText]);
 
   return (
-    <div className="example w-full max-w-[50em] h-full bg-white px-3 py-3  shadow-xl rounded-xl  z-30">
+    <div className="group relative example w-full max-w-[50em] h-full bg-white px-3 py-3  shadow-xl rounded-xl z-30">
+      <div className="absolute bottom-0 z-50 hidden md:block">
+        <div
+          className={`relative group-hover:translate-x-[-9.5rem] transition duration-700 ${
+            answer && "lg:translate-x-[-9.5rem]"
+          }`}
+        >
+          <Image src={bot} alt="bot" className={`w-[10rem]  `} />
+          <div
+            className={`bot-chat absolute whitespace-nowrap z-50 -top-[3.5rem] left-0 w-fit p-4 text-xs bg-white rounded-full shadow-md hidden opacity-0 group-hover:flex group-hover:opacity-100 transition duration-1000 ${
+              answer && "flex opacity-100"
+            }`}
+          >
+            Oops! my bad, go ahead.
+          </div>
+          {!answer && (
+            <div
+              className={`bot-chat absolute whitespace-nowrap -top-[3rem] left-6 w-fit p-3 text-xs bg-white rounded-full shadow-md z-[100] group-hover:hidden`}
+            >
+              Damn shawty!
+            </div>
+          )}
+          {answer && (
+            <div
+              className={`bot-chat absolute whitespace-nowrap -top-[3.5rem] left-0 w-fit p-4 text-xs bg-white rounded-full shadow-md z-[100] group-hover:hidden`}
+            >
+              Oops! my bad, go ahead.
+            </div>
+          )}
+        </div>
+      </div>
       <div className="flex w-full gap-5 items-center justify-center relative mb-4 z-[30]">
         <div className="flex absolute left-3 items-center justify-center gap-2">
           <span className="w-3 h-3 rounded-full bg-[#fa85a4]"></span>
@@ -45,7 +76,7 @@ const Answers = ({ answer, displayedText }: AnswerProp) => {
             // ref={cursorRef}
             className="cursor ml-10"
           >
-            |
+            ^
           </span>
         )}
         {answer && (

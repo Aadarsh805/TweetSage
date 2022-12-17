@@ -32,7 +32,7 @@ export default function RootLayout({
 
   return (
     <html>
-      <body className="h-screen overflow-hidden">
+      <body className="h-screen">
         <Navbar />
         <Image
           src={bgImage}
