@@ -47,13 +47,7 @@ const Examples: FC = () => {
           className="flex justify-between bg-[#f8f9fd] rounded-md mb-2 py-2 px-3"
         >
           <p>{item}</p>
-          <div
-            className="relative group"
-            onClick={() => navigator.clipboard.writeText(item)}
-          >
-            <span className="copied z-20 rounded-md absolute p-1 -top-8 -right-10 bg-black text-white text-xs hidden group-active:block">
-              copied
-            </span>
+          <div onClick={() => navigator.clipboard.writeText(item)}>
             <Tooltip title="copy">
               <ContentCopyIcon className="cursor-pointer w-3" />
             </Tooltip>

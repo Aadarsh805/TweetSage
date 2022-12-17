@@ -146,9 +146,6 @@ const Form = ({
 
   return (
     <div className="text-center flex flex-col items-center justify-center w-full z-30">
-      {/* <p className="text-xl sm:text-2xl mb-8 font-semibold">
-            What do you want to know about the person?
-          </p> */}
       <div className="flex flex-col gap-5 p-20 w-[50rem]">
         <form
           className="grid gap-5 grid-cols-3 w-full"

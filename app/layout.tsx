@@ -10,7 +10,7 @@ const theme = createTheme({
   palette: {
     action: {
       disabledBackground: "#e0e0e0",
-      disabled: "#a6a6a6",
+      disabled: "#9f9898",
     },
   },
 });
