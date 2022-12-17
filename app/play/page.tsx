@@ -6,6 +6,7 @@ import Example from "./Example";
 import Form from "./Form";
 import Slogan from "./Slogan";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { motion } from "framer-motion";
 
 const page = () => {
   const [answer, setAnswer] = useState<string>("");
@@ -13,7 +14,12 @@ const page = () => {
 
   return (
     <div className="mira-parent second-page mt-32 px-6 gap-12 sm:gap-20 w-full flex flex-col items-center justify-center relative z-30">
-      <div className="mira flex flex-col items-center z-30 w-full gap-12 sm:gap-20 ">
+      <motion.div
+        animate={{ y: 0, opacity: 1 }}
+        initial={{ y: "50%", opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mira flex flex-col items-center z-30 w-full gap-12 sm:gap-20 "
+      >
         <Slogan />
         <Form
           answer={answer}
@@ -21,7 +27,7 @@ const page = () => {
           displayedText={displayedText}
           setDisplayedText={setDisplayedText}
         />
-      </div>
+      </motion.div>
       <Example />
       <Answers answer={answer} displayedText={displayedText} />
 

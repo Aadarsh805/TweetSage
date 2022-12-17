@@ -1,6 +1,7 @@
 import React, { use, useEffect, useRef, useState } from "react";
 import bot from "public/bot.png";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 type AnswerProp = {
   answer: string;
@@ -22,14 +23,19 @@ const Answers = ({ answer, displayedText }: AnswerProp) => {
   // }, [displayedText]);
 
   return (
-    <div className="group relative example w-full max-w-[50em] h-full bg-white px-3 py-3  shadow-xl rounded-xl z-30">
+    <motion.div
+      animate={{ y: 0, opacity: 1 }}
+      initial={{ y: "10%", opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="group relative example w-full max-w-[50em] h-full bg-white px-3 py-3  shadow-xl rounded-xl z-30"
+    >
       <div className="absolute bottom-0 z-50 hidden md:block">
         <div
           className={`relative group-hover:translate-x-[-9.5rem] transition duration-700 ${
             answer && "lg:translate-x-[-9.5rem]"
           }`}
         >
-          <Image src={bot} alt="bot" className={`w-[10rem]  `} />
+          <Image src={bot} alt="bot" className={`w-[10rem]`} />
           <div
             className={`bot-chat absolute whitespace-nowrap z-50 -top-[3.5rem] left-0 w-fit p-4 text-xs bg-white rounded-full shadow-md hidden opacity-0 group-hover:flex group-hover:opacity-100 transition duration-1000 ${
               answer && "flex opacity-100"
@@ -71,21 +77,14 @@ const Answers = ({ answer, displayedText }: AnswerProp) => {
             </span>
           ))}
         </div>
-        {!answer && (
-          <span
-            // ref={cursorRef}
-            className="cursor ml-10"
-          >
-            ^
-          </span>
-        )}
+        {!answer && <span className="cursor ml-10">^</span>}
         {answer && (
           <p className="ml-10 leading-8 text-lg lg:text-xl font-medium text-[#090426ae] typing-effect">
             {displayedText}
           </p>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

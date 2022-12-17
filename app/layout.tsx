@@ -23,16 +23,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const scrollTop = () => {
-    console.log("hellow");
-  };
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [scrollTop]);
+  }, []);
 
   return (
     <html>
-      <body className="h-screen">
+      <body className="h-screengroup-hover:translate-x-[-9.5rem]">
         <Navbar />
         <Image
           src={bgImage}
