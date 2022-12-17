@@ -4,11 +4,10 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Tooltip } from "@mui/material";
 
 const exampleQuestion = [
-  "Tell me about this person",
-  "What does this person do",
-  "Tell a joke on this person",
-  "Describe this person in 5 words",
-  "Describe this person in 5 points",
+  "Tell me about the person",
+  "Tell me 5 jokes on that person",
+  "How will u describe the person above",
+  "Tell something about the person in a sentence",
 ];
 
 const Example = () => {

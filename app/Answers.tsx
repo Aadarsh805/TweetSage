@@ -45,7 +45,7 @@ const Answers = ({ answer, displayedText }: AnswerProp) => {
             // ref={cursorRef}
             className="cursor ml-10"
           >
-            ^
+            |
           </span>
         )}
         {answer && (
