@@ -28,7 +28,7 @@ const Answers = ({ answer, displayedText }: AnswerProp) => {
           <span className="w-3 h-3 rounded-full bg-[#ffe56e]"></span>
           <span className="w-3 h-3 rounded-full bg-[#52e282]"></span>
         </div>
-        <p className="text-white py-1 px-5 rounded-full bg-[#7214ff]">
+        <p className="text-white py-1 sm:px-5 px-2 sm:text-base text-xs rounded-full bg-[#7214ff]">
           Your answer
         </p>
       </div>

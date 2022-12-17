@@ -69,39 +69,35 @@ body {
   animation: blink 1s infinite;
 }
 
-@media (max-width: 460px) {
-  .second-page{
+/* @media (max-width: 460px) {
+  .second-page {
     margin-top: 20em;
   }
 }
 
-@media (max-width: 420px) {
-  .second-page{
-    margin-top: 18em;
-  }
-}
-@media (max-width: 660px) {
-  .second-page{
+/* @media (max-width: 660px) {
+  .second-page {
     margin-top: 14em;
   }
 }
 @media (max-width: 640px) {
-  .second-page{
+  .second-page {
     margin-top: 18em;
   }
 }
 @media (max-width: 560px) {
-  .second-page{
+  .second-page {
     margin-top: 16em;
   }
 }
 @media (max-width: 420px) {
-  .second-page{
+  .second-page {
     margin-top: 13em;
   }
-}
-@media (max-width: 400px) {
-  .second-page{
-    margin-top: 11em;
+}*/
+
+/* @media (max-width: 520px) {
+  .mira {
+    gap: 15rem;
   }
-}
+} */
