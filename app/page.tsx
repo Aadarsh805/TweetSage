@@ -25,11 +25,11 @@ const page = () => {
       <Image
         src={bgImage}
         alt="curve-image"
-        className="w-[70rem] min-w-[65rem] absolute top-[19em] sm:top-[14em] md:top-[68%] right-2/4 translate-x-[50%] translate-y-[-50%] -z-[5] "
+        className="w-[70rem] min-w-[65rem] absolute top-[68%] lg:top-[72%] right-2/4 translate-x-[50%] translate-y-[-50%] -z-[5]  "
       />
       <div
         ref={transitionRef}
-        className="flex flex-col relative transition-all duration-500 ease-linear h-screen gap-[100vh]"
+        className="flex  flex-col relative transition-all duration-500 ease-linear h-screen gap-[100vh]"
       >
         <div className="mt-24 flex flex-col items-center justify-center gap-10 relative px-10">
           <div className="flex z-[20] flex-col items-center justify-center text-center gap-2 max-w-[48em] ">
@@ -51,7 +51,7 @@ const page = () => {
             Get Started
           </button>
 
-          <div className="example w-full max-w-[40em] sm:h-[22rem] bg-white px-3 py-3 shadow-xl rounded-xl z-[10] overflow-y-scroll">
+          <div className="example w-full max-w-[40em] h-[20rem] sm:h-[22rem] bg-white px-3 py-3 shadow-xl rounded-xl z-[10] overflow-y-scroll">
             <div className="flex w-full relative gap-5 items-center justify-center mb-4 z-[30]">
               <div className="flex absolute left-2 items-center justify-center gap-2">
                 <span className="w-3 h-3 rounded-full bg-[#fa85a4]"></span>
@@ -76,12 +76,12 @@ const page = () => {
           {/* <Image src={boba5} alt="bobo" className=" w-[30rem]" /> */}
         </div>
 
-        <div className="mt-60 h-screen w-full flex flex-col items-center justify-center relative z-30">
-          <div className="flex flex-col items-center z-30">
+        <div className=" second-page sm:mt-[18em] mt-[18em] md:mt-80 lg:mt-60   px-3  w-full flex flex-col items-center justify-center relative z-30">
+          <div className="flex flex-col items-center z-30 w-full ">
             <Slogan />
             <Form
               answer={answer}
-              setAnswer={setAnswer}
+              setAnswer={setAnswer} 
               displayedText={displayedText}
               setDisplayedText={setDisplayedText}
             />
@@ -94,7 +94,7 @@ const page = () => {
             onClick={() => {
               transitionRef!.current!.style.transform = `translateY(0)`;
             }}
-            className="absolute bottom-0 right-20 w-12 h-12 rounded-full shadow-2xl transition duration-300 hover:bg-[#7214fff1] bg-[#7214ff] flex items-center justify-center"
+            className="absolute lg:bottom-0 bottom-[-2em]  right-10 w-12 h-12 rounded-full shadow-2xl transition duration-300 hover:bg-[#7214fff1] bg-[#7214ff] flex items-center justify-center z-50"
           >
             <ArrowUpwardIcon className="text-white" />
           </div>

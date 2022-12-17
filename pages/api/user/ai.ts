@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const completion = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: req.body.prompt,
-    temperature: 0.7,
+    temperature: 1,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,

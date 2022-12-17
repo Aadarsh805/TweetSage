@@ -12,12 +12,12 @@ const exampleQuestion = [
 
 const Example = () => {
   return (
-    <div className="flex lg:gap-20 items-center justify-center lg:absolute md:right-[1em] lg:right-[2.5em] xl:right-[6em] 2xl:right-[5em] md:top-1/2 lg:-translate-y-[15em] z-30">
+    <div className="2xl:flex hidden lg:gap-20  items-center justify-center lg:absolute right-[5em] md:top-1/2 lg:-translate-y-[18em] z-30">
       <div className="">
         {/* <h2 className="font-semibold text-lg text-center mb-2">
           Try these questions:
         </h2> */}
-        <div className="example bg-white lg:shadow-lg shadow-md w-[20em] h-[8em] mb-10 pt-3 pb-1 px-4  overflow-scroll lg:overflow-visible lg:h-full rounded">
+        <div className="example bg-white lg:shadow-lg shadow-md w-[20em] 2xl:w-[22em] max-h-[10em] 2xl:max-h-fit mb-10 pt-3 pb-1 px-4  overflow-scroll lg:h-full rounded-lg">
           {/* <div className="flex items-center gap-2 mb-4 ml-1">
             <span className="w-3 h-3 rounded-full bg-[#C884A6]"></span>
             <span className="w-3 h-3 rounded-full bg-[#FFE74C]"></span>

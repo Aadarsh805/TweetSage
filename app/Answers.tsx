@@ -21,7 +21,7 @@ const Answers = ({ answer, displayedText }: AnswerProp) => {
   // }, [displayedText]);
 
   return (
-    <div className="example w-full max-w-[50em] h-fit bg-white px-3 py-3 shadow-xl rounded-xl overflow-y-scroll z-30">
+    <div className="example w-full max-w-[50em] h-full bg-white px-3 py-3  shadow-xl rounded-xl  z-30">
       <div className="flex w-full gap-5 items-center justify-center relative mb-4 z-[30]">
         <div className="flex absolute left-3 items-center justify-center gap-2">
           <span className="w-3 h-3 rounded-full bg-[#fa85a4]"></span>
