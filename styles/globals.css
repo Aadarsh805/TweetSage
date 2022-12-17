@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@100;300;400;500;700;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -9,7 +12,7 @@ html {
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 * {
@@ -28,20 +31,6 @@ body {
   background-color: #090426;
 }
 
-.copied::after {
-  content: "";
-  position: absolute;
-  left: -1px;
-  bottom: -5px;
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 8px solid black;
-  z-index: -10;
-  transform: rotate(15deg);
-}
-
 .example::-webkit-scrollbar,
 .answer::-webkit-scrollbar {
   display: none;
@@ -49,6 +38,10 @@ body {
 
 .typing-effect:after {
   content: "^";
+  animation: blink 1s linear infinite;
+}
+.typing-effect2:after {
+  content: "|";
   animation: blink 1s linear infinite;
 }
 
@@ -69,35 +62,20 @@ body {
   animation: blink 1s infinite;
 }
 
-/* @media (max-width: 460px) {
-  .second-page {
-    margin-top: 20em;
-  }
+* {
+  outline: none;
 }
 
-/* @media (max-width: 660px) {
-  .second-page {
-    margin-top: 14em;
-  }
+.bot-chat::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -8px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 12px solid white;
+  z-index: -10;
 }
-@media (max-width: 640px) {
-  .second-page {
-    margin-top: 18em;
-  }
-}
-@media (max-width: 560px) {
-  .second-page {
-    margin-top: 16em;
-  }
-}
-@media (max-width: 420px) {
-  .second-page {
-    margin-top: 13em;
-  }
-}*/
-
-/* @media (max-width: 520px) {
-  .mira {
-    gap: 15rem;
-  }
-} */

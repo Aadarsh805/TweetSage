@@ -13,6 +13,7 @@
     "@mui/material": "^5.11.0",
     "@vercel/analytics": "^0.1.6",
     "axios": "^1.2.1",
+    "framer-motion": "^7.10.2",
     "next": "^13.0.4",
     "openai": "^3.1.0",
     "react": "^18.2.0",
