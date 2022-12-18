@@ -137,35 +137,35 @@ const Form = ({
   }, [answer]);
 
   // Background color change have been made here
-  // background-color: grey;
   
-  // const StyledButton = styled(LoadingButton)`
-  //   background-color: ${loadedTweets && tweets ? 'grey' : '#7214ff'} ;
-  //   border: none;
-  //   &:hover {
-  //     background-color: #7214ff;
-  //   }
-  // `;
+  // background-color: ${loadedTweets && tweets ? 'grey' : '#7214ff'} ;
+  const StyledButton = styled(LoadingButton)`
+  background-color: grey;
+    border: none;
+    &:hover {
+      background-color: #7214ff;
+    }
+  `;
 
 // Button Changes adding here
 
-  const StyledTweetButton = styled(LoadingButton)`
-    background-color: ${loadedTweets && tweets ? 'grey' : '#7214ff'} ;
-    border: none;
-    &:hover {
-      background-color: ${loadedTweets ? 'grey' : '#7214ff'};
-      opacity: ${!loadedTweets && user ? '.8' : '1'}
-    }
-  `;
+  // const StyledTweetButton = styled(LoadingButton)`
+  //   background-color: ${loadedTweets && tweets ? 'grey' : '#7214ff'} ;
+  //   border: none;
+  //   &:hover {
+  //     background-color: ${loadedTweets ? 'grey' : '#7214ff'};
+  //     opacity: ${!loadedTweets && user ? '.8' : '1'}
+  //   }
+  // `;
 
-  const StyledAnswerButton = styled(LoadingButton)`
-    background-color: ${question && tweets ? '#7214ff' : 'grey'} ;
-    border: none;
-    &:hover {
-      background-color: ${question ? '#7214ff' : 'grey'};
-      opacity: ${question && tweets ? '.8' : '1'}
-    }
-  `;
+  // const StyledAnswerButton = styled(LoadingButton)`
+  //   background-color: ${question && tweets ? '#7214ff' : 'grey'} ;
+  //   border: none;
+  //   &:hover {
+  //     background-color: ${question ? '#7214ff' : 'grey'};
+  //     opacity: ${question && tweets ? '.8' : '1'}
+  //   }
+  // `;
 
   return (
     <div className="text-center flex flex-col items-center justify-center w-full sm:max-w-[35em] z-30">
@@ -204,19 +204,19 @@ const Form = ({
           />
 
           {/* Making button changes here */}
-          <StyledTweetButton
+          <StyledButton
             type="submit"
             onClick={handleClick}
-            className="border h-[4em] text-white font-bold hover:opacity-80 self-stretch"
+            className="border h-[4em] bg-[#7214ff] text-white font-bold hover:opacity-80 self-stretch"
             loading={loadingTweets}
             variant="contained"
             disableFocusRipple
-            disabled={!user}
+            // disabled={!user || loadedTweets}
           // Another change have been made here
-          // disabled={loadedTweets}
+          disabled={loadedTweets}
           >
             {loadedTweets && tweets ? "tweets loaded" : "get tweets"}
-          </StyledTweetButton>
+          </StyledButton>
         </form>
         <TextField
           label="Question"
@@ -240,7 +240,7 @@ const Form = ({
           >
             <span className="text-xs text-white">Get tweets first!</span>
           </div>
-          <StyledAnswerButton
+          <StyledButton
             onClick={handleSecondClick}
             className={`border bg-[#7214ff] text-white font-bold w-full`}
             sx={{ padding: "1rem" }}
@@ -251,7 +251,7 @@ const Form = ({
             loadingIndicator="Getting answer..."
           >
             Get answer
-          </StyledAnswerButton>
+          </StyledButton>
         </div>
       </div>
     </div>

@@ -13,25 +13,7 @@ const page = () => {
   //   transitionRef!.current!.style.transform = `translateY(-200vh)`;
   // };
 
-  const sentences = ["First sentence", "Second sentence", "Third sentence"];
-  const [index, setIndex] = useState(0);
-  const [text, setText] = useState("");
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const currentSentence = sentences[index];
-      const currentChar = currentSentence[text.length];
-
-      if (text.length === currentSentence.length) {
-        setText("");
-        setIndex((index + 1) % sentences.length);
-      } else {
-        setText(text + currentChar);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [index, text, sentences]);
 
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -74,14 +56,14 @@ const page = () => {
             >
               <Image src={bot} alt="bot" className={`w-[10rem]`} />
               <div
-                className={`bot-chat absolute whitespace-nowrap z-50 -top-[3rem] left-0 w-fit p-4 text-xs bg-white rounded-full shadow-md hidden opacity-0 group-hover:flex group-hover:opacity-100 transition duration-1000`}
+                className={`bot-chat absolute whitespace-nowrap z-50 -top-[3rem] left-0 w-fit p-4 text-[.8rem] bg-white rounded-full shadow-md hidden opacity-0 group-hover:flex group-hover:opacity-100 transition duration-1000`}
               >
                 Oops! my bad, go ahead.
               </div>
               <div
-                className={`bot-chat absolute whitespace-nowrap -top-[3rem] left-1 w-fit p-4 text-xs bg-white rounded-full shadow-md z-[100] group-hover:hidden`}
+                className={`bot-chat  absolute whitespace-nowrap -top-[3rem] left-1 min-w-[8rem] p-4 text-[.8rem] bg-white rounded-full shadow-md z-[100] group-hover:hidden`}
               >
-                Damn 4 new followers 🥳
+                TweetSage is awesome!
               </div>
             </div>
           </div>
@@ -95,7 +77,7 @@ const page = () => {
               Guide
             </p>
           </div>
-          <div className="bg-[#f8f9fd] h-[18rem] sm:h-[22rem] px-4 py-2 rounded-lg z-[20]">
+          <div className="bg-[#f8f9fd] h-[18rem] sm:h-[22rem] px-4 py-2 rounded-lg z-[20] overflow-scroll">
             <div className="flex  absolute max-h-fit overflow-hidden w-fit flex-col items-center">
               {numbers.map((number) => (
                 <span key={number} className="text-[#b3b8d0] lg:text-lg">
@@ -103,9 +85,25 @@ const page = () => {
                 </span>
               ))}
             </div>
-            <p className="ml-10 leading-8 text-lg lg:text-xl font-medium text-[#090426ae] typing-effect2">
-              {text}
-            </p>
+            <div className="ml-10 leading-8 text-lg lg:text-xl text-[#09042687]" >
+              <span className="text-[#fa85a4]">{`<html>`}</span>
+              <p className="pl-4 flex flex-col">
+                <span className="text-[#1463FF] text-lg">{`<text>`}</span>
+                <span className="pl-4 text-[16px] leading-5">
+                  We will first analyze your tweets then generate an answer to your question based on those tweets
+                </span>
+                <span className="text-[#1463FF] text-lg">{`</text>`}</span>
+              </p>
+              <p className="pl-4 flex flex-col">
+                <span className="text-[#7214FF] text-lg">{`<code>`}</span>
+                <span className="pl-4 text-[16px] leading-5">
+                  We are using chatGPT to analyze your tweets. Only works if you are an active user on twitter
+                </span>
+                <span className="text-[#7214FF] text-lg">{`</code>`}</span>
+              </p>
+
+              <span className="text-[#fa85a4]">{`<html>`}</span>
+            </div>
           </div>
         </div>
 
