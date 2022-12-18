@@ -4,7 +4,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Logo from "../public/logo2.png";
 import Image from "next/image";
 
-
 const Navbar = () => {
   return (
     <nav className="fixed bg-white z-50 top-0  w-full flex items-center justify-between text-white px-5  lg:px-20 py-6 shadow-sm">
@@ -15,6 +14,7 @@ const Navbar = () => {
         <Image className=" w-[8em] sm:w-[12em]" src={Logo} alt="logo" />
       </Link>
       <Link
+        target="_blank"
         href="https://github.com/Aadarsh805/TweetSage.ai"
         className="outline-none noOutline-btn"
       >
