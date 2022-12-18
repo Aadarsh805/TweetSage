@@ -2,29 +2,30 @@
 
 An open-source tool that analyzes your Twitter activity and answers to your questions based on your recent tweets
 
-# How it works
+## How it works
 
 - It basically works by fetching the search user's recent tweets from the Twitter API
 - Then we give those tweets to chatGPT thorugh openAI's API and it generate answer based on user's recent tweets 
 
 <!-- 
-## UI Design
-
-![UI](https://i.imgur.com/z0xoIWh.png) 
-<!-- 
 ## Tech Stack
-
-<div align="left" gap="2">
+<div align="left" gap="2">          
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width=40 height=40/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-wordmark.svg" />          
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" />
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg"  width=40 height=40/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg" width=40 height=50/>
-</div> -->
+</div> 
+-->
+
 
 ## Installation
 
+> This project is built on nextJS 13 experimental version
+
 1. Fork the repo into your account
 
-<!-- ![Fork Image](https://i.imgur.com/mNw6zxu.png) -->
+![Fork Image](https://i.imgur.com/mNw6zxu.png)
 
 2. Clone the project into your local machine
 
@@ -43,13 +44,21 @@ cd TweetSage
 ```sh
 npm install
 ```
+4. Make .env file in root directory with these variables
 
-4. Run the project on local machine
+```sh
+BearerToken= 'YOUR TWITTER API KEY GOES HERE'
+OPEN_API_KEY= 'YOUR OPENAI API KEY GOES HERE'
+```
+- Get your twitter api key here: [TWITTER API](https://developer.twitter.com/en/products/twitter-api)
+- Get your openAi api key here: [OPENAI API](https://openai.com/api/)
+
+5. Run the project on local machine
 
 ```sh
 npm run dev
 ```
-5. Every time you start making changes to your forked repo make sure it's in sync with the original repo
+6. Every time you start making changes to your forked repo make sure it's in sync with the original repo
 
 ## Contributing Guidelines
 
