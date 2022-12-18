@@ -77,7 +77,7 @@ const page = () => {
               Guide
             </p>
           </div>
-          <div className="bg-[#f8f9fd] h-[18rem] sm:h-[22rem] px-4 py-2 rounded-lg z-[20] overflow-scroll">
+          <div className="bg-[#f8f9fd] h-[18rem] sm:h-[22rem] px-4 py-2 rounded-lg z-[20] overflow-y-scroll">
             <div className="flex  absolute max-h-fit overflow-hidden w-fit flex-col items-center">
               {numbers.map((number) => (
                 <span key={number} className="text-[#b3b8d0] lg:text-lg">
