@@ -4,71 +4,77 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Link from 'next/link';
 
 export default function Accordian() {
     return (
-        <div className='flex flex-col items-center justify-center'>
-            <Typography className='font-bold text-2xl mb-6'>
+        <div className='flex flex-col items-center justify-center w-full'>
+            <Typography className='font-bold text-2xl mb-6 text-[#7214ff] text-center'>
                 Frequently asked questions
             </Typography>
 
-            <Accordion>
+            <Accordion className='w-full py-2' >
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Typography className='py-2'>Why are u getting error?</Typography>
+                    <Typography >Why are u getting username wrong?</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        <li>
+                            You don't have your phone number linked with your Twitter account.
+
+                        </li>
+                        <li>
+                            You have not tweeted recently.
+                        </li>
+                        <li>
+                            Our API might be down, retry after sometime.
+                        </li>
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion className='w-full py-2' >
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Typography className='py-2'>Accordion 2</Typography>
+                    <Typography >How does it work?</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        We are fetching your recent tweets through the Twitter API and giving them to the chatGPT API along with the question you asked. It replies with the most optimal answer.
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion className='w-full py-2'>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Typography className='py-2'>Accordion 3</Typography>
+                    <Typography >Where can I see the source code</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        It's available right here in our Github repository <Link href='https://github.com/Aadarsh805/TweetSage.ai' />
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion className='w-full  py-2 shadow-bottom'>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
-                    <Typography className='py-2'>Accordion 4</Typography>
+                    <Typography >Can I contribute to the project?</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        Definitely yes, this project is completely open-source and open to your valuable contributions.
                     </Typography>
                 </AccordionDetails>
             </Accordion>

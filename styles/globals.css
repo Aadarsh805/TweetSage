@@ -31,8 +31,7 @@ body {
   background-color: #090426;
 }
 
-.example::-webkit-scrollbar,
-.answer::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: none;
 }
 

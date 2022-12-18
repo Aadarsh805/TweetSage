@@ -14,8 +14,8 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    // width: '100%',
-    // maxWidth: 700,
+    width: '90%',
+    maxWidth: 700,
     bgcolor: 'background.paper',
     // border: '2px solid #000',
     boxShadow: 24,
@@ -27,23 +27,8 @@ const Faqs = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [windowSize, setWindowSize] = React.useState(getWindowSize())
+  
 
-    function getWindowSize() {
-        const { innerWidth } = window
-        return innerWidth
-    }
-
-    useEffect(() => {
-        const handleWindowSize = () => {
-            setWindowSize(getWindowSize())
-        }
-
-        window.addEventListener('resize', handleWindowSize)
-
-        return () => window.removeEventListener('resize', handleWindowSize)
-
-    }, [])
 
 
 
@@ -52,7 +37,7 @@ const Faqs = () => {
         <div >
             <Button onClick={handleOpen} className='text-[#535479]'>FAQs</Button>
             <Modal
-                sx={{ paddingLeft: 40 }}
+                // sx={{ borderRadius: '5rem' }}
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={open}
@@ -62,9 +47,10 @@ const Faqs = () => {
                 BackdropProps={{
                     timeout: 500,
                 }}
+                
             >
                 <Fade in={open}>
-                    <Box sx={style} className={`${windowSize <= 820 ? 'w-[90%]' : 'w-full max-w-[50em]'}`}>
+                    <Box sx={style} className={`rounded-md`}>
                         <Accordian />
                     </Box>
                 </Fade>

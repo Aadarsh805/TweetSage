@@ -13,14 +13,26 @@ const numbers = [
 ];
 
 const Answers = ({ answer, displayedText }: AnswerProp) => {
-  // const cursorRef = useRef<null | HTMLSpanElement>(null);
 
-  // useEffect(() => {
-  //   cursorRef?.current?.scrollIntoView({
-  //     behavior: "smooth",
-  //     block: "nearest",
-  //   });
-  // }, [displayedText]);
+  const sentences = [ "Damn shawty! 🥵   ", `Elon Musk tweeted what 🤯   `, "Yay! 4 new followers 🥳  " ];
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentSentence = sentences[index];
+      const currentChar = currentSentence[text.length];
+
+      if (text.length === currentSentence.length) {
+        setText("");
+        setIndex((index + 1) % sentences.length);
+      } else {
+        setText(text + currentChar);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [index, text, sentences]);
 
   return (
     <motion.div
@@ -45,9 +57,9 @@ const Answers = ({ answer, displayedText }: AnswerProp) => {
           </div>
           {!answer && (
             <div
-              className={`bot-chat absolute whitespace-nowrap -top-[3rem] left-6 w-fit p-3 text-xs bg-white rounded-full shadow-md z-[100] group-hover:hidden`}
+              className={`bot-chat absolute whitespace-nowrap -top-[3rem] left-6 w-fit p-3 text-[.880rem] bg-white rounded-full shadow-md z-[100] group-hover:hidden`}
             >
-              Damn shawty!
+              {text}
             </div>
           )}
           {answer && (
