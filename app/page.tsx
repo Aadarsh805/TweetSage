@@ -62,7 +62,7 @@ const page = () => {
         <Link
           href="/play"
           // onClick={handleScroll}
-          className="bg-[#7214ff] z-[20] text-white sm:py-3 py-2 text-lg hover:bg-[#7214ffe4] transition duration-300 px-6 rounded-full font-semibold"
+          className="noOutline-btn bg-[#7214ff] z-[20] text-white sm:py-3 py-2 text-lg hover:bg-[#7214ffe4] transition duration-300 px-6 rounded-full font-semibold"
         >
           Try it out
         </Link>

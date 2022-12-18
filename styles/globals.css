@@ -45,6 +45,10 @@ body {
   animation: blink 1s linear infinite;
 }
 
+.noOutline-btn {
+  -webkit-tap-highlight-color: transparent;
+}
+
 @keyframes blink {
   0% {
     opacity: 1;

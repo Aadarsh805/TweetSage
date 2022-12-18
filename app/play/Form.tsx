@@ -136,11 +136,34 @@ const Form = ({
     };
   }, [answer]);
 
-  const StyledButton = styled(LoadingButton)`
-    background-color: grey;
+  // Background color change have been made here
+  // background-color: grey;
+  
+  // const StyledButton = styled(LoadingButton)`
+  //   background-color: ${loadedTweets && tweets ? 'grey' : '#7214ff'} ;
+  //   border: none;
+  //   &:hover {
+  //     background-color: #7214ff;
+  //   }
+  // `;
+
+// Button Changes adding here
+
+  const StyledTweetButton = styled(LoadingButton)`
+    background-color: ${loadedTweets && tweets ? 'grey' : '#7214ff'} ;
     border: none;
     &:hover {
-      background-color: #7214ff;
+      background-color: ${loadedTweets ? 'grey' : '#7214ff'};
+      opacity: ${!loadedTweets && user ? '.8' : '1'}
+    }
+  `;
+
+  const StyledAnswerButton = styled(LoadingButton)`
+    background-color: ${question && tweets ? '#7214ff' : 'grey'} ;
+    border: none;
+    &:hover {
+      background-color: ${question ? '#7214ff' : 'grey'};
+      opacity: ${question && tweets ? '.8' : '1'}
     }
   `;
 
@@ -179,17 +202,21 @@ const Form = ({
             }}
             className="col-span-2"
           />
-          <StyledButton
+
+          {/* Making button changes here */}
+          <StyledTweetButton
             type="submit"
             onClick={handleClick}
-            className="border bg-[#7214ff] h-[4em] text-white font-bold hover:opacity-80 self-stretch"
+            className="border h-[4em] text-white font-bold hover:opacity-80 self-stretch"
             loading={loadingTweets}
             variant="contained"
             disableFocusRipple
-            disabled={loadedTweets}
+            disabled={!user}
+          // Another change have been made here
+          // disabled={loadedTweets}
           >
             {loadedTweets && tweets ? "tweets loaded" : "get tweets"}
-          </StyledButton>
+          </StyledTweetButton>
         </form>
         <TextField
           label="Question"
@@ -204,18 +231,16 @@ const Form = ({
         />
 
         <div
-          className={`relative group w-full flex ${
-            noTweets && "cursor-not-allowed"
-          }`}
+          className={`relative group w-full flex ${noTweets && "cursor-not-allowed"
+            }`}
         >
           <div
-            className={`absolute bg-[#7214ff] rounded-lg px-3  p-2 font-semibold -bottom-2/3 left-1/2 -translate-x-1/2 hidden ${
-              noTweets && "group-hover:flex"
-            }`}
+            className={`absolute bg-[#7214ff] rounded-lg px-3  p-2 font-semibold -bottom-2/3 left-1/2 -translate-x-1/2 hidden ${noTweets && "group-hover:flex"
+              }`}
           >
             <span className="text-xs text-white">Get tweets first!</span>
           </div>
-          <StyledButton
+          <StyledAnswerButton
             onClick={handleSecondClick}
             className={`border bg-[#7214ff] text-white font-bold w-full`}
             sx={{ padding: "1rem" }}
@@ -226,7 +251,7 @@ const Form = ({
             loadingIndicator="Getting answer..."
           >
             Get answer
-          </StyledButton>
+          </StyledAnswerButton>
         </div>
       </div>
     </div>
