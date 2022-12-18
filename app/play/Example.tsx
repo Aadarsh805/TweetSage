@@ -16,11 +16,6 @@ const Example = () => {
     <div className="lg:flex hidden lg:gap-20  items-center justify-center lg:absolute xl:right-[5em] right-0 md:top-1/2 lg:-translate-y-[18em] z-30">
       <div className="">
         <div className="example bg-white lg:shadow-lg shadow-md w-[14em] 2xl:w-[22em] max-h-[14em] 2xl:max-h-fit mb-10 pt-3 pb-1 xl:px-4 px-2 overflow-scroll lg:h-full rounded-lg">
-          {/* <div className="flex items-center gap-2 mb-4 ml-1">
-            <span className="w-3 h-3 rounded-full bg-[#C884A6]"></span>
-            <span className="w-3 h-3 rounded-full bg-[#FFE74C]"></span>
-            <span className="w-3 h-3 rounded-full bg-[#81F495]"></span>
-          </div> */}
           <p className="font-semibold text-md ml-1 text-[#6804fd] mb-2">
             Try these questions:
           </p>
