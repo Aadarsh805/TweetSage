@@ -19,7 +19,6 @@ const Example = () => {
           <p className="font-semibold text-md ml-1 text-[#6804fd] mb-2">
             Try these questions:
           </p>
-
           <div className="mt-2 ">
             <Examples />
           </div>
