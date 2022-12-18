@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { useEffect } from "react";
 import bgImage from "public/bg-curve.png";
 import Image from "next/image";
+import Footer from "./Footer";
 
 const theme = createTheme({
   palette: {
@@ -39,6 +40,10 @@ export default function RootLayout({
         <div className="mt-[3.2rem]">
           <ThemeProvider theme={theme}>{children}</ThemeProvider>
         </div>
+        <div className="px-5 flex items-center justify-center">
+          <Footer />
+        </div>
+
         <Analytics />
       </body>
     </html>
