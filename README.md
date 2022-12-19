@@ -1,6 +1,7 @@
 # TweetSage
 
 An open-source tool that analyzes your Twitter activity and answers to your questions based on your recent tweets
+Wanna know more how it's built, check out my blog on how it built it: [BLOG LINK](https://aadarshthakur.hashnode.dev/how-i-built-tweetsage-by-using-chatgpt-and-twitter-api-together)
 
 ## How it works
 
