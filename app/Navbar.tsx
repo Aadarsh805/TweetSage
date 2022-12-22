@@ -20,7 +20,7 @@ const Navbar = () => {
         className="outline-none noOutline-btn"
       >
         <div className="flex justify-center">
-            <button className="hidden items-center mx-2 rounded-md bg-blue-500 p-2 font-medium lg:flex">
+            <button className="hidden items-center mx-2 rounded-md bg-blue-500 p-2 font-medium lg:hidden">
           <TwitterIcon/>
           Login with Twitter
         </button>
