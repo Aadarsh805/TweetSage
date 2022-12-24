@@ -9,6 +9,9 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import styled from "@emotion/styled";
 import BlockIcon from "@mui/icons-material/Block";
 import { FormControl } from "@mui/material";
+import AutoComplete from "@mui/material/Autocomplete";
+import { exampleQuestion } from "./Example";
+import useResize from "../../hooks/useResize";
 
 type TweetData = {
   text: string | null | undefined;
@@ -46,6 +49,7 @@ const Form = ({
   const [loadedTweets, setLoadedTweets] = useState(false);
   const [noUserError, setNoUserError] = useState(false);
   const [noQuestionError, setNoQuestionError] = useState(false);
+  const width = useResize();
 
   useEffect(() => {
     setUser("");
@@ -137,17 +141,17 @@ const Form = ({
   }, [answer]);
 
   // Background color change have been made here
-  
+
   // background-color: ${loadedTweets && tweets ? 'grey' : '#7214ff'} ;
   const StyledButton = styled(LoadingButton)`
-  background-color: grey;
+    background-color: grey;
     border: none;
     &:hover {
       background-color: #7214ff;
     }
   `;
 
-// Button Changes adding here
+  // Button Changes adding here
 
   // const StyledTweetButton = styled(LoadingButton)`
   //   background-color: ${loadedTweets && tweets ? 'grey' : '#7214ff'} ;
@@ -212,31 +216,58 @@ const Form = ({
             variant="contained"
             disableFocusRipple
             // disabled={!user || loadedTweets}
-          // Another change have been made here
-          disabled={loadedTweets}
+            // Another change have been made here
+            disabled={loadedTweets}
           >
             {loadedTweets && tweets ? "tweets loaded" : "get tweets"}
           </StyledButton>
         </form>
-        <TextField
-          label="Question"
-          error={noQuestionError}
-          autoComplete="off"
-          variant="outlined"
-          value={question}
-          onChange={(e: any) => setQuestion(e.currentTarget.value)}
-          className=""
-          required
-          helperText={noQuestionError && `Question can't be empty bro!`}
-        />
+
+
+        {width < 1024 ? (
+          <AutoComplete
+            freeSolo
+            disablePortal
+            options={exampleQuestion}
+            id="combo-box"
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Question"
+                error={noQuestionError}
+                autoComplete="off"
+                variant="outlined"
+                value={question}
+                onChange={(e: any) => setQuestion(e.currentTarget.value)}
+                className=""
+                required
+                helperText={noQuestionError && `Question can't be empty bro!`}
+              />
+            )}
+          />
+        ) : (
+          <TextField
+            label="Question"
+            error={noQuestionError}
+            autoComplete="off"
+            variant="outlined"
+            value={question}
+            onChange={(e: any) => setQuestion(e.currentTarget.value)}
+            className=""
+            required
+            helperText={noQuestionError && `Question can't be empty bro!`}
+          />
+        )}
 
         <div
-          className={`relative group w-full flex ${noTweets && "cursor-not-allowed"
-            }`}
+          className={`relative group w-full flex ${
+            noTweets && "cursor-not-allowed"
+          }`}
         >
           <div
-            className={`absolute bg-[#7214ff] rounded-lg px-3  p-2 font-semibold -bottom-2/3 left-1/2 -translate-x-1/2 hidden ${noTweets && "group-hover:flex"
-              }`}
+            className={`absolute bg-[#7214ff] rounded-lg px-3  p-2 font-semibold -bottom-2/3 left-1/2 -translate-x-1/2 hidden ${
+              noTweets && "group-hover:flex"
+            }`}
           >
             <span className="text-xs text-white">Get tweets first!</span>
           </div>
