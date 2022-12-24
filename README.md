@@ -8,7 +8,7 @@ https://user-images.githubusercontent.com/95094057/208742885-50db694c-1b8d-4aa4-
 
 ## How it works
 
-- It basically works by fetching the search user's recent tweets from the Twitter API
+- It works by fetching the user's recent tweets from the Twitter API
 - Then we give those tweets to chatGPT thorugh openAI's API and it generate answer based on user's recent tweets 
 
 <!-- 
