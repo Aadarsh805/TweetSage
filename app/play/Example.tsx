@@ -3,7 +3,7 @@ import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Tooltip } from "@mui/material";
 
-const exampleQuestion = [
+export const exampleQuestion = [
   "Tell me about this person",
   "What does this person do",
   "Tell a joke on this person",
@@ -39,7 +39,7 @@ const Examples: FC = () => {
           key={index}
           className="flex justify-between bg-[#f8f9fd] rounded-md mb-2 py-2 px-3"
         >
-          <p className='text-base 2xl:text-lg' >{item}</p>
+          <p className="text-base 2xl:text-lg">{item}</p>
           <div onClick={() => navigator.clipboard.writeText(item)}>
             <Tooltip title="copy">
               <ContentCopyIcon className="cursor-pointer w-3" />

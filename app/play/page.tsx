@@ -18,7 +18,7 @@ const page = () => {
         animate={{ y: 0, opacity: 1 }}
         initial={{ y: "50%", opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="mira flex flex-col items-center z-30 w-full gap-12 sm:gap-20 "
+        className="mira flex flex-col items-center z-[31] w-full gap-12 sm:gap-20 "
       >
         <Slogan />
         <Form
