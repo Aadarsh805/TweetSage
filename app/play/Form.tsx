@@ -51,8 +51,6 @@ const Form = ({
   const [noQuestionError, setNoQuestionError] = useState(false);
   const width = useResize();
 
-  console.log(width);
-
   useEffect(() => {
     setUser("");
     setQuestion("");
