@@ -223,8 +223,10 @@ const Form = ({
           </StyledButton>
         </form>
 
+
         {width < 1024 ? (
           <AutoComplete
+            freeSolo
             disablePortal
             options={exampleQuestion}
             id="combo-box"
