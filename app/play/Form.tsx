@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { MouseEvent, useCallback, useEffect, useState } from "react";
+import {
+  HTMLAttributes,
+  HtmlHTMLAttributes,
+  MouseEvent,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import useSWR from "swr";
 import { LoadingButton } from "@mui/lab";
 import TextField from "@mui/material/TextField";
@@ -30,6 +38,21 @@ type AnswerProps = {
   setDisplayedText: (value: string) => void;
 };
 
+type SuggestionType = {
+  id: number;
+  label: string;
+};
+
+function getSuggestions(sampleQ: string[]): SuggestionType[] {
+  return sampleQ.reduce<SuggestionType[]>((acc, curr, indx) => {
+    acc.push({
+      id: indx + 1,
+      label: curr,
+    });
+    return acc;
+  }, []);
+}
+
 const Form = ({
   answer,
   setAnswer,
@@ -49,6 +72,9 @@ const Form = ({
   const [loadedTweets, setLoadedTweets] = useState(false);
   const [noUserError, setNoUserError] = useState(false);
   const [noQuestionError, setNoQuestionError] = useState(false);
+  const [suggestions] = useState<SuggestionType[]>(
+    getSuggestions(exampleQuestion)
+  );
   const width = useResize();
 
   useEffect(() => {
@@ -87,7 +113,7 @@ const Form = ({
 
   const handleSecondClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("clicked button second");
+    // console.log("clicked button second");
     setAnswer("");
 
     if (question === "") {
@@ -116,6 +142,10 @@ const Form = ({
 
     setAnswer(results.result.choices[0].text);
     setLoadingData(false);
+  };
+
+  const handleInputChange = (e: SyntheticEvent, value: string) => {
+    setQuestion(value);
   };
 
   let noTweets = tweets?.length < 1;
@@ -223,13 +253,23 @@ const Form = ({
           </StyledButton>
         </form>
 
-
         {width < 1024 ? (
           <AutoComplete
             freeSolo
             disablePortal
-            options={exampleQuestion}
+            options={suggestions}
+            onInputChange={handleInputChange}
             id="combo-box"
+            renderOption={(
+              props: HTMLAttributes<HTMLLIElement>,
+              option: SuggestionType
+            ) => {
+              return (
+                <li {...props} key={option.id}>
+                  {option.label}
+                </li>
+              );
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -238,7 +278,7 @@ const Form = ({
                 autoComplete="off"
                 variant="outlined"
                 value={question}
-                onChange={(e: any) => setQuestion(e.currentTarget.value)}
+                // onChange={(e: any) => setQuestion(e.currentTarget.value)}
                 className=""
                 required
                 helperText={noQuestionError && `Question can't be empty bro!`}
