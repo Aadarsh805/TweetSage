@@ -11,6 +11,9 @@ import { motion } from "framer-motion";
 const page = () => {
   const [answer, setAnswer] = useState<string>("");
   const [displayedText, setDisplayedText] = useState("");
+  const [question, setQuestion] = useState<string>("");
+
+  console.log(question);
 
   return (
     <div className="mira-parent second-page mt-32 px-6 gap-12 sm:gap-20 w-full flex flex-col items-center justify-center relative z-30">
@@ -26,9 +29,11 @@ const page = () => {
           setAnswer={setAnswer}
           displayedText={displayedText}
           setDisplayedText={setDisplayedText}
+          question={question}
+          setQuestion={setQuestion}
         />
       </motion.div>
-      <Example />
+      <Example setQuestion={setQuestion} />
       <Answers answer={answer} displayedText={displayedText} />
 
       {/* <div
