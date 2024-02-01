@@ -36,6 +36,8 @@ type AnswerProps = {
   setAnswer: (value: string) => void;
   displayedText: string;
   setDisplayedText: (value: string) => void;
+  question: string;
+  setQuestion: (value: string) => void;
 };
 
 type SuggestionType = {
@@ -58,6 +60,8 @@ const Form = ({
   setAnswer,
   displayedText,
   setDisplayedText,
+  question,
+  setQuestion,
 }: AnswerProps) => {
   const [user, setUser] = useState<string>("");
   const [userProfile, setUserProfile] = useState<UserData>({
@@ -65,7 +69,6 @@ const Form = ({
     username: "",
     name: "",
   });
-  const [question, setQuestion] = useState<string>("");
   const [tweets, setTweets] = useState<TweetData[]>([]);
   const [loadingTweets, setLoadingTweets] = useState(false);
   const [loadingData, setLoadingData] = useState(false);

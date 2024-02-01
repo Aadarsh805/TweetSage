@@ -10,8 +10,15 @@ export const exampleQuestion = [
   "Describe this person in 5 words",
   "Describe this person in 5 points",
 ];
+type QuestionProps = {
+  setQuestion: (value: string) => void;
+};
 
-const Example = () => {
+type QuestionProp = {
+  setQuestion: (value: string) => void;
+};
+
+const Example = ({ setQuestion }: QuestionProps) => {
   return (
     <div className="lg:flex hidden lg:gap-20  items-center justify-center lg:absolute xl:right-[5em] right-0 md:top-1/2 lg:-translate-y-[18em] z-30">
       <div className="">
@@ -21,7 +28,7 @@ const Example = () => {
           </p>
 
           <div className="mt-2 ">
-            <Examples />
+            <Examples setQuestion={setQuestion} />
           </div>
         </div>
       </div>
@@ -31,7 +38,7 @@ const Example = () => {
 
 export default Example;
 
-const Examples: FC = () => {
+const Examples: FC<QuestionProp> = ({ setQuestion }: QuestionProp) => {
   return (
     <div>
       {exampleQuestion.map((item, index) => (
@@ -40,9 +47,14 @@ const Examples: FC = () => {
           className="flex justify-between bg-[#f8f9fd] rounded-md mb-2 py-2 px-3"
         >
           <p className="text-base 2xl:text-lg">{item}</p>
-          <div onClick={() => navigator.clipboard.writeText(item)}>
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              setQuestion(item);
+            }}
+          >
             <Tooltip title="copy">
-              <ContentCopyIcon className="cursor-pointer w-3" />
+              <ContentCopyIcon className="cursor-pointer" />
             </Tooltip>
           </div>
         </div>
